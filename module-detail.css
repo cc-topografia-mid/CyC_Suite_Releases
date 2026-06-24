@@ -27,8 +27,9 @@
 
 .module-detail {
   position: relative;
-  margin: 24px 0;
+  margin: 28px 0 0;
   overflow: hidden;
+  scroll-margin-top: 88px;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -76,7 +77,7 @@
 }
 
 .detail-content {
-  max-height: 520px;
+  max-height: 560px;
   padding: 24px 28px 32px;
   overflow: auto;
   color: #36433a;
@@ -123,4 +124,134 @@
   padding: 8px;
   text-align: left;
   border: 1px solid var(--line);
+}
+
+.module-pipeline {
+  padding: 28px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--detail-accent, var(--g700)) 5%, white);
+  border-top: 1px solid var(--line);
+}
+
+.module-pipeline[hidden] {
+  display: none;
+}
+
+.module-pipeline-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 24px;
+}
+
+.module-pipeline-heading span {
+  color: var(--detail-accent, var(--g700));
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.module-pipeline-heading h4 {
+  margin: 4px 0 0;
+  font-size: 21px;
+}
+
+.module-pipeline-heading p {
+  max-width: 520px;
+  margin: 0;
+  color: #5c6a61;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.module-pipeline-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1fr) 22px minmax(0, 1fr) 22px minmax(0, 1fr) 22px minmax(0, 1fr);
+  align-items: center;
+}
+
+.module-flow-step {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 138px;
+  padding: 18px 14px;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--detail-accent, var(--g700)) 24%, var(--line));
+  border-radius: 6px;
+}
+
+.module-flow-step > span {
+  position: absolute;
+  top: 10px;
+  right: 11px;
+  color: color-mix(in srgb, var(--detail-accent, var(--g700)) 65%, white);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.module-flow-step > svg {
+  width: 23px;
+  height: 23px;
+  margin-bottom: 19px;
+  color: var(--detail-accent, var(--g700));
+}
+
+.module-flow-step b,
+.module-flow-step small {
+  display: block;
+}
+
+.module-flow-step b {
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.module-flow-step small {
+  color: #69756d;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.module-flow-line {
+  height: 1px;
+  background: var(--detail-accent, var(--g700));
+}
+
+@media (max-width: 900px) {
+  .module-pipeline-heading {
+    display: block;
+  }
+
+  .module-pipeline-heading p {
+    margin-top: 10px;
+  }
+
+  .module-pipeline-flow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .module-flow-step {
+    min-height: 0;
+  }
+
+  .module-flow-line {
+    width: 1px;
+    height: 18px;
+    margin-left: 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .detail-toolbar,
+  .detail-content,
+  .module-pipeline {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .detail-toolbar h3 {
+    font-size: 20px;
+  }
 }

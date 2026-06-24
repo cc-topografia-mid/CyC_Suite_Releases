@@ -1,6 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) window.lucide.createIcons();
 
+  const modulePipelines = {
+    postproceso: {
+      summary: "Convierte observaciones satelitales en una solución geodésica evaluada, auditable y lista para entregar.",
+      steps: [
+        ["satellite", "Observaciones", "Rover, base y metadatos RINEX"],
+        ["scan-search", "Diagnóstico", "Compatibilidad, calidad y estrategia"],
+        ["cpu", "Procesamiento", "RTKLIB-EX y modelos geodésicos"],
+        ["badge-check", "Resolución", "Ranking, consenso y validación FIX"],
+        ["file-check-2", "Entrega", "POS, reporte y sidecar _cyc.json"]
+      ]
+    },
+    rinex: {
+      summary: "Prepara automáticamente la estación base y los productos geodésicos requeridos por la sesión.",
+      steps: [
+        ["file-input", "Lectura Rover", "Fecha, época y posición aproximada"],
+        ["map-pin-check", "Selección Base", "Estación INEGI compatible"],
+        ["cloud-download", "Descarga", "RINEX, BRDC, SP3, CLK, ATX e IONEX"],
+        ["file-cog", "Preparación", "Descompresión, unión y homologación"],
+        ["package-check", "Paquete GNSS", "Archivos listos para postproceso"]
+      ]
+    },
+    gnss: {
+      summary: "Calcula y verifica factores geodésicos para trabajar coherentemente entre Grid, Ground y CAD.",
+      steps: [
+        ["map-pinned", "Coordenadas", "Ubicación, zona y sistema de referencia"],
+        ["mountain", "Elevación", "Altura y radio terrestre efectivo"],
+        ["calculator", "Cálculo", "Factor de cuadrícula y elevación"],
+        ["combine", "Factor Combinado", "Directo e inverso"],
+        ["file-output", "Resultado", "Aplicación individual, lote o CAD"]
+      ]
+    },
+    conversiones: {
+      summary: "Transforma coordenadas entre representaciones geodésicas con parámetros controlados y resultados verificables.",
+      steps: [
+        ["table-properties", "Entrada", "Coordenadas y formato de origen"],
+        ["shield-check", "Validación", "Datum, zona, hemisferio y unidades"],
+        ["refresh-cw", "Transformación", "Geográficas, UTM o TME"],
+        ["crosshair", "Verificación", "Consistencia y precisión numérica"],
+        ["file-output", "Salida", "Resultados y exportación tabular"]
+      ]
+    },
+    datalink: {
+      summary: "Normaliza archivos de distintas estaciones totales y los conecta con un flujo de revisión y exportación CAD.",
+      steps: [
+        ["folder-input", "Archivo de Campo", "Sokkia, Foif, Stonex o Leica"],
+        ["scan-search", "Detección", "Marca, estructura y codificación"],
+        ["list-tree", "Normalización", "Puntos, códigos y observaciones"],
+        ["table-2", "Revisión", "Vista previa y correcciones"],
+        ["file-output", "Exportación", "Formatos interoperables y CAD"]
+      ]
+    },
+    linderos: {
+      summary: "Ajusta geometrías de colindancia mediante métodos robustos y documenta técnicamente el resultado.",
+      steps: [
+        ["waypoints", "Importación", "Puntos, códigos y tramos"],
+        ["filter", "Depuración", "Agrupación y descarte de atípicos"],
+        ["ruler", "Ajuste", "Regresión ortogonal y RANSAC"],
+        ["move-diagonal-2", "Geometría", "Offsets e intersecciones"],
+        ["notebook-tabs", "Dictamen", "Resultados y memoria técnica"]
+      ]
+    },
+    presupuestos: {
+      summary: "Estructura costos, análisis y avances para producir presupuestos y documentos administrativos consistentes.",
+      steps: [
+        ["library", "Catálogos", "Insumos, unidades y rendimientos"],
+        ["calculator", "APU", "Costos directos e integración"],
+        ["folder-kanban", "Proyecto", "Partidas, cantidades y avances"],
+        ["chart-no-axes-combined", "Control", "Totales, variaciones y sobrecostos"],
+        ["file-spreadsheet", "Entregables", "Reportes, Excel y documentos"]
+      ]
+    },
+    control_personal: {
+      summary: "Relaciona personal, obras y contratos para controlar asignaciones y financiamiento semanal por proyecto.",
+      steps: [
+        ["database", "Base Operativa", "Selección o creación del proyecto"],
+        ["users-round", "Personal", "Empleados, puestos y expedientes"],
+        ["briefcase-business", "Asignaciones", "Obras, contratos y periodos"],
+        ["calendar-range", "Cálculo Semanal", "Nómina y financiamiento"],
+        ["file-chart-column", "Seguimiento", "Historial y reportes de control"]
+      ]
+    }
+  };
+
   const menuButton = document.querySelector(".menu-button");
   const mobileNav = document.querySelector(".mobile-nav");
   menuButton?.addEventListener("click", () => {
@@ -25,6 +108,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const detailTitle = document.querySelector("[data-detail-title]");
   const detailCategory = document.querySelector("[data-detail-category]");
   const detailContent = document.querySelector("[data-detail-content]");
+  const detailPipeline = document.querySelector("[data-detail-pipeline]");
+  const pipelineTitle = document.querySelector("[data-pipeline-title]");
+  const pipelineSummary = document.querySelector("[data-pipeline-summary]");
+  const pipelineFlow = document.querySelector("[data-pipeline-flow]");
+
+  function renderPipeline(card) {
+    const pipeline = modulePipelines[card.dataset.readme];
+    if (!pipeline) {
+      detailPipeline.hidden = true;
+      return;
+    }
+    pipelineTitle.textContent = `Pipeline de ${card.querySelector("h3").textContent}`;
+    pipelineSummary.textContent = pipeline.summary;
+    pipelineFlow.innerHTML = pipeline.steps.map((step, index) => `
+      <div class="module-flow-step">
+        <span>${String(index + 1).padStart(2, "0")}</span>
+        <i data-lucide="${step[0]}"></i>
+        <div><b>${step[1]}</b><small>${step[2]}</small></div>
+      </div>
+      ${index < pipeline.steps.length - 1 ? '<div class="module-flow-line" aria-hidden="true"></div>' : ""}
+    `).join("");
+    detailPipeline.hidden = false;
+    if (window.lucide) window.lucide.createIcons();
+  }
 
   async function openModule(card) {
     document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
@@ -34,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     detailCategory.textContent = `${card.querySelector(".module-meta span").textContent} · ${card.querySelector(".module-meta small").textContent}`;
     detailPanel.hidden = false;
     detailContent.innerHTML = "<p>Cargando documentación...</p>";
+    detailPipeline.hidden = true;
     try {
       const response = await fetch(`module-readmes/${card.dataset.readme}.md`);
       if (!response.ok) throw new Error();
@@ -42,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch {
       detailContent.innerHTML = "<p>No fue posible cargar la documentación de este módulo.</p>";
     }
+    renderPipeline(card);
     detailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 

@@ -79,14 +79,6 @@
     <section class="modules-section" id="modulos"><div class="section-shell">
       <div class="section-heading"><div><p class="section-kicker">Directorio técnico</p><h2>Herramientas conectadas por un mismo flujo</h2></div><p>Cada módulo resuelve una etapa concreta sin romper la continuidad de los datos ni la trazabilidad del proyecto.</p></div>
       <div class="filter-tabs"><button class="active" data-filter="all">Todas</button><button data-filter="gnss">GNSS</button><button data-filter="field">Topografía</button><button data-filter="admin">Gestión</button></div>
-      <section class="module-detail" aria-live="polite" hidden>
-        <div class="detail-accent"></div>
-        <div class="detail-toolbar">
-          <div><span data-detail-category>DOCUMENTACIÓN</span><h3 data-detail-title>Información del módulo</h3></div>
-          <button class="detail-close" type="button" aria-label="Cerrar información"><i data-lucide="x"></i></button>
-        </div>
-        <div class="detail-content" data-detail-content></div>
-      </section>
       <div class="module-grid">
         <button type="button" class="module-card" data-category="gnss" data-readme="postproceso" data-accent="#f8c719" style="--module-accent:#f8c719"><div class="module-icon"><i data-lucide="radio-tower"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0600</small></div><h3>Motor Postproceso GNSS</h3><p>RTKLIB-EX, CyC Resolve, ranking FIX, GeoCore, IonoCore y reportes técnicos auditables.</p></button>
         <button type="button" class="module-card" data-category="gnss" data-readme="rinex" data-accent="#3b82f6" style="--module-accent:#3b82f6"><div class="module-icon"><i data-lucide="file-input"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0100</small></div><h3>Asistente RINEX GNSS</h3><p>Bases INEGI, BRDC, SP3, CLK, ATX e IONEX preparados para postproceso.</p></button>
@@ -97,10 +89,25 @@
         <button type="button" class="module-card" data-category="admin" data-readme="presupuestos" data-accent="#16a34a" style="--module-accent:#16a34a"><div class="module-icon"><i data-lucide="chart-no-axes-combined"></i></div><div class="module-meta"><span>Gestión</span><small>v260425.1120</small></div><h3>Control de Presupuestos</h3><p>APU, proyectos, partidas, sobrecostos y documentos corporativos sobre SQLite.</p></button>
         <button type="button" class="module-card" data-category="admin" data-readme="control_personal" data-accent="#0f766e" style="--module-accent:#0f766e"><div class="module-icon"><i data-lucide="users-round"></i></div><div class="module-meta"><span>Gestión</span><small>v260518.1000</small></div><h3>Control de Personal</h3><p>Empleados, obras, contratos, nómina y financiamiento semanal por proyecto.</p></button>
       </div>
+      <section class="module-detail" aria-live="polite" hidden>
+        <div class="detail-accent"></div>
+        <div class="detail-toolbar">
+          <div><span data-detail-category>DOCUMENTACIÓN</span><h3 data-detail-title>Información del módulo</h3></div>
+          <button class="detail-close" type="button" aria-label="Cerrar información"><i data-lucide="x"></i></button>
+        </div>
+        <article class="detail-content" data-detail-content></article>
+        <section class="module-pipeline" data-detail-pipeline hidden>
+          <div class="module-pipeline-heading">
+            <div><span>PIPELINE OPERATIVO</span><h4 data-pipeline-title>Flujo del módulo</h4></div>
+            <p data-pipeline-summary></p>
+          </div>
+          <div class="module-pipeline-flow" data-pipeline-flow></div>
+        </section>
+      </section>
     </div></section>
 
     <section class="pipeline-section" id="pipeline"><div class="section-shell pipeline-shell">
-      <div class="pipeline-copy"><p class="section-kicker">Pipeline CyC</p><h2>De la observación al entregable, sin perder contexto</h2><p>El sidecar <code>_cyc.json</code> transporta rutas, metadatos y decisiones entre herramientas. El operador avanza; la Suite conserva la memoria técnica.</p><div class="pipeline-note"><i data-lucide="shield-check"></i><span><b>Trazabilidad operativa</b> Archivos, productos geodésicos y configuraciones permanecen vinculados.</span></div></div>
+      <div class="pipeline-copy"><p class="section-kicker">Pipeline CyC</p><h2>Un flujo especializado para cada herramienta</h2><p>Selecciona cualquier módulo del directorio para consultar primero su documentación técnica y, a continuación, las etapas concretas de su pipeline operativo.</p><div class="pipeline-note"><i data-lucide="shield-check"></i><span><b>Trazabilidad operativa</b> Cada flujo conserva sus entradas, transformaciones y entregables vinculados.</span></div></div>
       <div class="pipeline-flow">
         <div class="flow-step"><span>01</span><i data-lucide="satellite"></i><div><b>Observación</b><small>Rover y estación base</small></div></div><div class="flow-line"></div>
         <div class="flow-step"><span>02</span><i data-lucide="file-stack"></i><div><b>Preparación</b><small>RINEX y productos precisos</small></div></div><div class="flow-line"></div>
