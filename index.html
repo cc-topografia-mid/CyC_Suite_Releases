@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173b2a">
+  <meta name="description" content="Centro oficial de descargas de CyC Topografía Suite. Herramientas profesionales para GNSS, topografía y gestión técnica.">
+  <title>CyC Topografía Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="#inicio" aria-label="CyC Topografía Suite">
+        <span class="brand-mark"><b>C</b><i>&amp;</i><b>C</b></span>
+        <span><strong>TOPOGRAFÍA</strong><small>Suite</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Navegación principal">
+        <a href="#modulos">Herramientas</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
+      </nav>
+      <a class="nav-download" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i> Descargar</a>
+      <button class="menu-button" aria-label="Abrir menú" aria-expanded="false"><i data-lucide="menu"></i></button>
+    </div>
+    <nav class="mobile-nav"><a href="#modulos">Herramientas</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="inicio">
+      <canvas id="fieldCanvas" aria-hidden="true"></canvas><div class="hero-grid"></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Centro oficial de distribución</p>
+          <h1>CyC Topografía Suite</h1>
+          <p class="hero-lead">Un Hub profesional para convertir observaciones GNSS, datos de campo y decisiones de ingeniería en resultados precisos, trazables y listos para entregar.</p>
+          <div class="hero-actions">
+            <a class="primary-button" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i><span>Descargar para Windows</span></a>
+            <a class="secondary-button" href="#modulos">Explorar herramientas <i data-lucide="arrow-down"></i></a>
+          </div>
+          <div class="release-inline"><span class="status-dot"></span><strong data-release-version>Versión estable</strong><span data-release-date>Distribución oficial mediante GitHub Releases</span></div>
+        </div>
+        <div class="product-stage" aria-label="Vista conceptual del Hub CyC">
+          <div class="stage-window">
+            <div class="window-bar"><div><span></span> CyC Hub</div><div class="window-controls"><i></i><i></i><i></i></div></div>
+            <div class="window-body">
+              <aside class="mock-sidebar">
+                <div class="mock-logo">C<span>&amp;</span>C</div>
+                <div class="mock-nav active"><i data-lucide="satellite"></i><span>Procesamiento GNSS</span></div>
+                <div class="mock-nav"><i data-lucide="refresh-cw"></i><span>Conversión y formatos</span></div>
+                <div class="mock-nav"><i data-lucide="ruler"></i><span>Análisis topográfico</span></div>
+                <div class="mock-nav"><i data-lucide="briefcase-business"></i><span>Gestión administrativa</span></div>
+              </aside>
+              <div class="mock-content">
+                <small>DIRECTORIO DE HERRAMIENTAS</small><h2>Procesamiento GNSS</h2>
+                <div class="mock-tool active"><span><i data-lucide="radio-tower"></i></span><div><b>Motor Postproceso GNSS</b><small>RTKLIB-EX · CyC Resolve</small></div><em>Activo</em></div>
+                <div class="mock-tool"><span><i data-lucide="file-input"></i></span><div><b>Asistente RINEX GNSS</b><small>INEGI · IONEX · Pipeline</small></div><em>Activo</em></div>
+                <div class="mock-tool"><span><i data-lucide="calculator"></i></span><div><b>Factores GNSS</b><small>Grid · Ground · CAD</small></div><em>Activo</em></div>
+                <div class="mock-metrics"><span><b>8</b> herramientas</span><span><b>3</b> idiomas</span><span><b>1</b> flujo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="coordinate-tag tag-a"><span>FIX</span> Q=1</div><div class="coordinate-tag tag-b"><span>UTM</span> Z16Q</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary-band"><div class="summary-inner">
+      <div><strong>8</strong><span>herramientas integradas</span></div><div><strong>RTKLIB-EX</strong><span>motor GNSS especializado</span></div>
+      <div><strong>ES · EN · PT</strong><span>interfaz internacionalizada</span></div><div><strong>Windows</strong><span>distribución lista para instalar</span></div>
+    </div></section>
+
+    <section class="modules-section" id="modulos"><div class="section-shell">
+      <div class="section-heading"><div><p class="section-kicker">Directorio técnico</p><h2>Herramientas conectadas por un mismo flujo</h2></div><p>Cada módulo resuelve una etapa concreta sin romper la continuidad de los datos ni la trazabilidad del proyecto.</p></div>
+      <div class="filter-tabs"><button class="active" data-filter="all">Todas</button><button data-filter="gnss">GNSS</button><button data-filter="field">Topografía</button><button data-filter="admin">Gestión</button></div>
+      <div class="module-grid">
+        <article class="module-card featured" data-category="gnss"><div class="module-icon"><i data-lucide="radio-tower"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0600</small></div><h3>Motor Postproceso GNSS</h3><p>RTKLIB-EX, CyC Resolve, ranking FIX, GeoCore, IonoCore y reportes técnicos auditables.</p></article>
+        <article class="module-card" data-category="gnss"><div class="module-icon"><i data-lucide="file-input"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0100</small></div><h3>Asistente RINEX GNSS</h3><p>Bases INEGI, BRDC, SP3, CLK, ATX e IONEX preparados para postproceso.</p></article>
+        <article class="module-card" data-category="gnss"><div class="module-icon"><i data-lucide="calculator"></i></div><div class="module-meta"><span>GNSS</span><small>v260525.2200</small></div><h3>Factores GNSS</h3><p>Factores de cuadrícula, elevación, combinado e inverso para Grid, Ground y CAD.</p></article>
+        <article class="module-card" data-category="field"><div class="module-icon"><i data-lucide="map-pinned"></i></div><div class="module-meta"><span>Coordenadas</span><small>v260527.2100</small></div><h3>Conversor Geodésico</h3><p>Conversiones geográficas, UTM y TME con parámetros configurables y criterio INEGI.</p></article>
+        <article class="module-card" data-category="field"><div class="module-icon"><i data-lucide="cable"></i></div><div class="module-meta"><span>Campo</span><small>v260408.1500</small></div><h3>DataLink Converter</h3><p>Archivos Sokkia, Foif, Stonex y Leica conectados directamente con flujos CAD.</p></article>
+        <article class="module-card" data-category="field"><div class="module-icon"><i data-lucide="ruler"></i></div><div class="module-meta"><span>Análisis</span><small>v260428.1833</small></div><h3>Ajuste de Linderos</h3><p>Regresión ortogonal, RANSAC, offsets, intersecciones y dictámenes técnicos.</p></article>
+        <article class="module-card" data-category="admin"><div class="module-icon"><i data-lucide="chart-no-axes-combined"></i></div><div class="module-meta"><span>Gestión</span><small>v260425.1120</small></div><h3>Control de Presupuestos</h3><p>APU, proyectos, partidas, sobrecostos y documentos corporativos sobre SQLite.</p></article>
+        <article class="module-card" data-category="admin"><div class="module-icon"><i data-lucide="users-round"></i></div><div class="module-meta"><span>Gestión</span><small>v260518.1000</small></div><h3>Control de Personal</h3><p>Empleados, obras, contratos, nómina y financiamiento semanal por proyecto.</p></article>
+      </div>
+    </div></section>
+
+    <section class="pipeline-section" id="pipeline"><div class="section-shell pipeline-shell">
+      <div class="pipeline-copy"><p class="section-kicker">Pipeline CyC</p><h2>De la observación al entregable, sin perder contexto</h2><p>El sidecar <code>_cyc.json</code> transporta rutas, metadatos y decisiones entre herramientas. El operador avanza; la Suite conserva la memoria técnica.</p><div class="pipeline-note"><i data-lucide="shield-check"></i><span><b>Trazabilidad operativa</b> Archivos, productos geodésicos y configuraciones permanecen vinculados.</span></div></div>
+      <div class="pipeline-flow">
+        <div class="flow-step"><span>01</span><i data-lucide="satellite"></i><div><b>Observación</b><small>Rover y estación base</small></div></div><div class="flow-line"></div>
+        <div class="flow-step"><span>02</span><i data-lucide="file-stack"></i><div><b>Preparación</b><small>RINEX y productos precisos</small></div></div><div class="flow-line"></div>
+        <div class="flow-step"><span>03</span><i data-lucide="cpu"></i><div><b>Resolución</b><small>RTKLIB-EX y CyC Resolve</small></div></div><div class="flow-line"></div>
+        <div class="flow-step"><span>04</span><i data-lucide="file-check-2"></i><div><b>Entrega</b><small>Auditoría y reporte</small></div></div>
+      </div>
+    </div></section>
+
+    <section class="install-section" id="instalacion"><div class="section-shell install-grid">
+      <div class="install-copy"><p class="section-kicker">Instalación</p><h2>Lista para trabajar en Windows</h2><p>Descarga la publicación más reciente y ejecuta el instalador oficial. No necesitas preparar Python ni instalar librerías por separado.</p><div class="requirements"><span><i data-lucide="monitor"></i> Windows 10/11 x64</span><span><i data-lucide="hard-drive"></i> Instalación local</span><span><i data-lucide="wifi"></i> Internet para servicios GNSS</span></div></div>
+      <div class="release-panel"><div class="release-panel-head"><span>ÚLTIMA PUBLICACIÓN</span><i data-lucide="package-check"></i></div><strong data-release-version>Versión estable</strong><p data-release-name>CyC Topografía Suite para Windows</p><a class="primary-button full" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i><span>Ir a la descarga oficial</span></a><small><i data-lucide="github"></i> Distribuido mediante GitHub Releases</small></div>
+    </div></section>
+  </main>
+
+  <footer>
+    <div class="footer-inner"><a class="brand footer-brand" href="#inicio"><span class="brand-mark"><b>C</b><i>&amp;</i><b>C</b></span><span><strong>TOPOGRAFÍA</strong><small>Suite</small></span></a><p>Ingeniería aplicada a geodesia, topografía y gestión técnica.</p><div class="footer-links"><a href="https://github.com/cc-topografia-mid/CyC_Suite_Releases"><i data-lucide="github"></i> Repositorio</a><a href="mailto:christian@topografia.cc"><i data-lucide="mail"></i> Contacto</a></div></div>
+    <div class="footer-bottom"><span>© <span data-current-year></span> CyC Topografía · Mérida, Yucatán, México</span><a href="#inicio">Volver arriba <i data-lucide="arrow-up"></i></a></div>
+  </footer>
+</body>
+</html>
