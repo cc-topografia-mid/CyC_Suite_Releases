@@ -1,0 +1,14 @@
+{
+  "suite": "260623.0600",
+  "latest_module": "postproceso",
+  "modules": {
+    "postproceso": "260623.0600",
+    "rinex": "260623.0100",
+    "gnss": "260525.2200",
+    "conversiones": "260527.2100",
+    "datalink": "260408.1500",
+    "linderos": "260428.1833",
+    "presupuestos": "260425.1120",
+    "control_personal": "260518.1000"
+  }
+}

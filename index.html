@@ -10,7 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="module-detail.css">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -42,7 +44,7 @@
             <a class="primary-button" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i><span>Descargar para Windows</span></a>
             <a class="secondary-button" href="#modulos">Explorar herramientas <i data-lucide="arrow-down"></i></a>
           </div>
-          <div class="release-inline"><span class="status-dot"></span><strong data-release-version>Versión estable</strong><span data-release-date>Distribución oficial mediante GitHub Releases</span></div>
+          <div class="release-inline"><span class="status-dot"></span><strong data-suite-version>Suite v260623.0600</strong><span data-latest-module>Impulsada por Motor Postproceso GNSS</span></div>
         </div>
         <div class="product-stage" aria-label="Vista conceptual del Hub CyC">
           <div class="stage-window">
@@ -77,15 +79,23 @@
     <section class="modules-section" id="modulos"><div class="section-shell">
       <div class="section-heading"><div><p class="section-kicker">Directorio técnico</p><h2>Herramientas conectadas por un mismo flujo</h2></div><p>Cada módulo resuelve una etapa concreta sin romper la continuidad de los datos ni la trazabilidad del proyecto.</p></div>
       <div class="filter-tabs"><button class="active" data-filter="all">Todas</button><button data-filter="gnss">GNSS</button><button data-filter="field">Topografía</button><button data-filter="admin">Gestión</button></div>
+      <section class="module-detail" aria-live="polite" hidden>
+        <div class="detail-accent"></div>
+        <div class="detail-toolbar">
+          <div><span data-detail-category>DOCUMENTACIÓN</span><h3 data-detail-title>Información del módulo</h3></div>
+          <button class="detail-close" type="button" aria-label="Cerrar información"><i data-lucide="x"></i></button>
+        </div>
+        <div class="detail-content" data-detail-content></div>
+      </section>
       <div class="module-grid">
-        <article class="module-card featured" data-category="gnss"><div class="module-icon"><i data-lucide="radio-tower"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0600</small></div><h3>Motor Postproceso GNSS</h3><p>RTKLIB-EX, CyC Resolve, ranking FIX, GeoCore, IonoCore y reportes técnicos auditables.</p></article>
-        <article class="module-card" data-category="gnss"><div class="module-icon"><i data-lucide="file-input"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0100</small></div><h3>Asistente RINEX GNSS</h3><p>Bases INEGI, BRDC, SP3, CLK, ATX e IONEX preparados para postproceso.</p></article>
-        <article class="module-card" data-category="gnss"><div class="module-icon"><i data-lucide="calculator"></i></div><div class="module-meta"><span>GNSS</span><small>v260525.2200</small></div><h3>Factores GNSS</h3><p>Factores de cuadrícula, elevación, combinado e inverso para Grid, Ground y CAD.</p></article>
-        <article class="module-card" data-category="field"><div class="module-icon"><i data-lucide="map-pinned"></i></div><div class="module-meta"><span>Coordenadas</span><small>v260527.2100</small></div><h3>Conversor Geodésico</h3><p>Conversiones geográficas, UTM y TME con parámetros configurables y criterio INEGI.</p></article>
-        <article class="module-card" data-category="field"><div class="module-icon"><i data-lucide="cable"></i></div><div class="module-meta"><span>Campo</span><small>v260408.1500</small></div><h3>DataLink Converter</h3><p>Archivos Sokkia, Foif, Stonex y Leica conectados directamente con flujos CAD.</p></article>
-        <article class="module-card" data-category="field"><div class="module-icon"><i data-lucide="ruler"></i></div><div class="module-meta"><span>Análisis</span><small>v260428.1833</small></div><h3>Ajuste de Linderos</h3><p>Regresión ortogonal, RANSAC, offsets, intersecciones y dictámenes técnicos.</p></article>
-        <article class="module-card" data-category="admin"><div class="module-icon"><i data-lucide="chart-no-axes-combined"></i></div><div class="module-meta"><span>Gestión</span><small>v260425.1120</small></div><h3>Control de Presupuestos</h3><p>APU, proyectos, partidas, sobrecostos y documentos corporativos sobre SQLite.</p></article>
-        <article class="module-card" data-category="admin"><div class="module-icon"><i data-lucide="users-round"></i></div><div class="module-meta"><span>Gestión</span><small>v260518.1000</small></div><h3>Control de Personal</h3><p>Empleados, obras, contratos, nómina y financiamiento semanal por proyecto.</p></article>
+        <button type="button" class="module-card" data-category="gnss" data-readme="postproceso" data-accent="#f8c719" style="--module-accent:#f8c719"><div class="module-icon"><i data-lucide="radio-tower"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0600</small></div><h3>Motor Postproceso GNSS</h3><p>RTKLIB-EX, CyC Resolve, ranking FIX, GeoCore, IonoCore y reportes técnicos auditables.</p></button>
+        <button type="button" class="module-card" data-category="gnss" data-readme="rinex" data-accent="#3b82f6" style="--module-accent:#3b82f6"><div class="module-icon"><i data-lucide="file-input"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0100</small></div><h3>Asistente RINEX GNSS</h3><p>Bases INEGI, BRDC, SP3, CLK, ATX e IONEX preparados para postproceso.</p></button>
+        <button type="button" class="module-card" data-category="gnss" data-readme="gnss" data-accent="#14b8a6" style="--module-accent:#14b8a6"><div class="module-icon"><i data-lucide="calculator"></i></div><div class="module-meta"><span>GNSS</span><small>v260525.2200</small></div><h3>Factores GNSS</h3><p>Factores de cuadrícula, elevación, combinado e inverso para Grid, Ground y CAD.</p></button>
+        <button type="button" class="module-card" data-category="field" data-readme="conversiones" data-accent="#8b5cf6" style="--module-accent:#8b5cf6"><div class="module-icon"><i data-lucide="map-pinned"></i></div><div class="module-meta"><span>Coordenadas</span><small>v260527.2100</small></div><h3>Conversor Geodésico</h3><p>Conversiones geográficas, UTM y TME con parámetros configurables y criterio INEGI.</p></button>
+        <button type="button" class="module-card" data-category="field" data-readme="datalink" data-accent="#e87920" style="--module-accent:#e87920"><div class="module-icon"><i data-lucide="cable"></i></div><div class="module-meta"><span>Campo</span><small>v260408.1500</small></div><h3>DataLink Converter</h3><p>Archivos Sokkia, Foif, Stonex y Leica conectados directamente con flujos CAD.</p></button>
+        <button type="button" class="module-card" data-category="field" data-readme="linderos" data-accent="#dc4c64" style="--module-accent:#dc4c64"><div class="module-icon"><i data-lucide="ruler"></i></div><div class="module-meta"><span>Análisis</span><small>v260428.1833</small></div><h3>Ajuste de Linderos</h3><p>Regresión ortogonal, RANSAC, offsets, intersecciones y dictámenes técnicos.</p></button>
+        <button type="button" class="module-card" data-category="admin" data-readme="presupuestos" data-accent="#16a34a" style="--module-accent:#16a34a"><div class="module-icon"><i data-lucide="chart-no-axes-combined"></i></div><div class="module-meta"><span>Gestión</span><small>v260425.1120</small></div><h3>Control de Presupuestos</h3><p>APU, proyectos, partidas, sobrecostos y documentos corporativos sobre SQLite.</p></button>
+        <button type="button" class="module-card" data-category="admin" data-readme="control_personal" data-accent="#0f766e" style="--module-accent:#0f766e"><div class="module-icon"><i data-lucide="users-round"></i></div><div class="module-meta"><span>Gestión</span><small>v260518.1000</small></div><h3>Control de Personal</h3><p>Empleados, obras, contratos, nómina y financiamiento semanal por proyecto.</p></button>
       </div>
     </div></section>
 

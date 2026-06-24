@@ -21,7 +21,49 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }));
 
+  const detailPanel = document.querySelector(".module-detail");
+  const detailTitle = document.querySelector("[data-detail-title]");
+  const detailCategory = document.querySelector("[data-detail-category]");
+  const detailContent = document.querySelector("[data-detail-content]");
+
+  async function openModule(card) {
+    document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
+    card.classList.add("selected");
+    detailPanel.style.setProperty("--detail-accent", card.dataset.accent);
+    detailTitle.textContent = card.querySelector("h3").textContent;
+    detailCategory.textContent = `${card.querySelector(".module-meta span").textContent} · ${card.querySelector(".module-meta small").textContent}`;
+    detailPanel.hidden = false;
+    detailContent.innerHTML = "<p>Cargando documentación...</p>";
+    try {
+      const response = await fetch(`module-readmes/${card.dataset.readme}.md`);
+      if (!response.ok) throw new Error();
+      const markdown = await response.text();
+      detailContent.innerHTML = window.marked ? window.marked.parse(markdown) : `<pre>${markdown}</pre>`;
+    } catch {
+      detailContent.innerHTML = "<p>No fue posible cargar la documentación de este módulo.</p>";
+    }
+    detailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  document.querySelectorAll(".module-card").forEach(card => card.addEventListener("click", () => openModule(card)));
+  document.querySelector(".detail-close")?.addEventListener("click", () => {
+    detailPanel.hidden = true;
+    document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
+  });
+
   document.querySelectorAll("[data-current-year]").forEach(node => node.textContent = new Date().getFullYear());
+  fetch("versions.json")
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(versions => {
+      document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
+      document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = `Última evolución: ${versions.latest_module}`);
+      document.querySelectorAll(".module-card").forEach(card => {
+        const version = versions.modules?.[card.dataset.readme];
+        if (version) card.querySelector(".module-meta small").textContent = `v${version}`;
+      });
+    })
+    .catch(() => {});
+
   fetch("https://api.github.com/repos/cc-topografia-mid/CyC_Suite_Releases/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(release => {
