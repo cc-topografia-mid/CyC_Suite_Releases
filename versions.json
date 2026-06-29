@@ -1,6 +1,6 @@
 {
-  "suite": "260623.0600",
-  "latest_module": "postproceso",
+  "suite": "260627.1012",
+  "latest_module": "desktop-release",
   "modules": {
     "postproceso": "260623.0600",
     "rinex": "260623.0100",

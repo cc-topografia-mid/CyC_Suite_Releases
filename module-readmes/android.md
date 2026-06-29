@@ -154,26 +154,7 @@ Documentacion de avances, incidencias, bancos de nivel, puntos de control, evide
 
 ## Instalacion para pruebas
 
-El APK de pruebas puede instalarse directamente en un dispositivo Android compatible:
-
-```text
-CyC_Suite_Mobile_debug.apk
-```
-
 En Android puede ser necesario habilitar la instalacion desde origenes desconocidos para el gestor de archivos o navegador desde donde se abra el APK.
-
-## Abrir el proyecto en Android Studio
-
-1. Abrir la carpeta del proyecto:
-
-```text
-C:\00_PROYECTOS\CyC_Suite_Android
-```
-
-2. Esperar la sincronizacion de Gradle.
-3. Ejecutar el modulo `app` en un emulador o dispositivo fisico.
-
-El proyecto evita dependencias externas de interfaz para mantener una base ligera, portable y facil de revisar.
 
 ## Mapa y conectividad
 
@@ -189,9 +170,7 @@ Algunas funciones avanzadas de la suite de escritorio, como edicion CAD completa
 
 ## Proteccion de version de prueba
 
-La version debug incluye un bloqueo de uso despues de 30 dias y una opcion de desbloqueo mediante contrasena desde Configuracion. Esta proteccion esta pensada para pruebas controladas, no como sistema definitivo de licenciamiento comercial.
-
-Para distribucion publica o comercial se recomienda implementar firma de release, ofuscacion/minificacion con R8/ProGuard y, si aplica, validacion de licencia externa.
+La version debug incluye un bloqueo de uso despues de 30 dias. Esta proteccion esta pensada para pruebas controladas, no como sistema definitivo de licenciamiento comercial.
 
 ## Contacto
 

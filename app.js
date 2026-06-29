@@ -242,7 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
       document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
-      document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = `Última evolución: ${versions.latest_module}`);
+      const latestLabel = versions.latest_module === "desktop-release" ? "Última publicación Desktop" : `Última evolución: ${versions.latest_module}`;
+      document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = latestLabel);
       document.querySelectorAll(".module-card").forEach(card => {
         const version = versions.modules?.[card.dataset.readme];
         if (version) card.querySelector(".module-meta small").textContent = `v${version}`;
