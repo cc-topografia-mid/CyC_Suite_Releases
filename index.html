@@ -11,9 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="module-detail.css?v=20260629">
+  <link rel="stylesheet" href="release-detail.css?v=20260629">
+  <link rel="stylesheet" href="android-detail.css?v=20260629">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260629" defer></script>
+  <script src="app.js?v=20260629b" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -24,12 +26,12 @@
         <span><strong>TOPOGRAFÍA</strong><small>Suite</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Navegación principal">
-        <a href="#modulos">Herramientas</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
+        <a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
       </nav>
       <a class="nav-download" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i> Descargar</a>
       <button class="menu-button" aria-label="Abrir menú" aria-expanded="false"><i data-lucide="menu"></i></button>
     </div>
-    <nav class="mobile-nav"><a href="#modulos">Herramientas</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
+    <nav class="mobile-nav"><a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
   </header>
 
   <main id="contenido">
@@ -42,7 +44,7 @@
           <p class="hero-lead">Un Hub profesional para convertir observaciones GNSS, datos de campo y decisiones de ingeniería en resultados precisos, trazables y listos para entregar.</p>
           <div class="hero-actions">
             <a class="primary-button" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i><span>Descargar para Windows</span></a>
-            <a class="secondary-button" href="#modulos">Explorar herramientas <i data-lucide="arrow-down"></i></a>
+            <a class="secondary-button" href="#android">Ver Android <i data-lucide="smartphone"></i></a>
           </div>
           <div class="release-inline"><span class="status-dot"></span><strong data-suite-version>Suite v260623.0600</strong><span data-latest-module>Impulsada por Motor Postproceso GNSS</span></div>
         </div>
@@ -145,7 +147,50 @@
 
     <section class="install-section" id="instalacion"><div class="section-shell install-grid">
       <div class="install-copy"><p class="section-kicker">Instalación</p><h2>Lista para trabajar en Windows</h2><p>Descarga la publicación más reciente y ejecuta el instalador oficial. No necesitas preparar Python ni instalar librerías por separado.</p><div class="requirements"><span><i data-lucide="monitor"></i> Windows 10/11 x64</span><span><i data-lucide="hard-drive"></i> Instalación local</span><span><i data-lucide="wifi"></i> Internet para servicios GNSS</span></div></div>
-      <div class="release-panel"><div class="release-panel-head"><span>ÚLTIMA PUBLICACIÓN</span><i data-lucide="package-check"></i></div><strong data-release-version>Versión estable</strong><p data-release-name>CyC Topografía Suite para Windows</p><a class="primary-button full" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i><span>Ir a la descarga oficial</span></a><small><i data-lucide="github"></i> Distribuido mediante GitHub Releases</small></div>
+      <div class="release-panel"><div class="release-panel-head"><span>ÚLTIMA PUBLICACIÓN</span><i data-lucide="package-check"></i></div><strong data-release-version>Versión estable</strong><p data-release-name>CyC Topografía Suite para Windows</p><div class="release-meta"><span data-release-date>Publicación oficial</span><span data-release-asset>Instalador para Windows</span><span data-release-size></span><span data-release-sha></span></div><a class="primary-button full" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i><span>Descargar instalador .exe</span></a><a class="release-secondary" data-release-page href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="github"></i><span>Ver publicación y notas</span></a><small><i data-lucide="shield-check"></i> Instalador oficial publicado en GitHub Releases</small></div>
+    </div></section>
+
+    <section class="android-section" id="android"><div class="section-shell android-shell">
+      <div class="android-heading">
+        <div><p class="section-kicker">Suite móvil Android · v0.1.0 debug</p><h2>CyC Mobile Suite</h2><p>Herramientas técnicas para campo, revisión rápida y preparación de información desde el teléfono, alineadas con la identidad visual y operativa de CyC Topografía Suite.</p></div>
+        <div class="android-actions"><a class="primary-button" href="#android-docs"><i data-lucide="book-open-text"></i><span>Leer documentación Android</span></a><a class="secondary-button" href="#modulos"><i data-lucide="monitor"></i> Volver a Desktop</a></div>
+      </div>
+      <div class="android-layout">
+        <div class="phone-stage" aria-label="Vista conceptual de CyC Mobile Suite">
+          <div class="phone-shell">
+            <div class="phone-status"><span></span><b>CyC Mobile</b><i></i></div>
+            <div class="phone-hero"><small>CAMPO Y GABINETE</small><strong>Herramientas móviles</strong><p>Geodesia, CAD, bitácora y conversión de datos en sitio.</p></div>
+            <div class="phone-tools">
+              <span><i data-lucide="map-pinned"></i> Conversor</span>
+              <span><i data-lucide="calculator"></i> Factores GNSS</span>
+              <span><i data-lucide="ruler"></i> Linderos</span>
+              <span><i data-lucide="file-cog"></i> DataLink</span>
+              <span><i data-lucide="drafting-compass"></i> Visor CAD</span>
+              <span><i data-lucide="clipboard-list"></i> Bitácora</span>
+            </div>
+          </div>
+        </div>
+        <div class="android-tool-grid">
+          <article><i data-lucide="map-pinned"></i><span>Geodesia</span><h3>Conversor Geodésico</h3><p>Coordenadas geográficas, UTM y TME con soporte para WGS84 / ITRF2008 y NAD27.</p></article>
+          <article><i data-lucide="calculator"></i><span>GNSS</span><h3>Factores GNSS</h3><p>Factor de cuadrícula, elevación, combinado, CAD inverso y selección desde mapa OpenStreetMap.</p></article>
+          <article><i data-lucide="ruler"></i><span>Campo</span><h3>Ajuste de Linderos</h3><p>Importación de puntos, ajuste lineal, longitud, azimut, RMSE, R2 e intersección de tramos.</p></article>
+          <article><i data-lucide="cable"></i><span>Estación total</span><h3>DataLink Converter</h3><p>Normalización móvil de Sokkia SDR, Foif RTS DAT, Stonex / Leica GSI y exportación para CAD.</p></article>
+          <article><i data-lucide="drafting-compass"></i><span>Gabinete móvil</span><h3>Visor CAD</h3><p>DXF ASCII, zoom, pan, consulta de coordenadas, snap, medición y capa de puntos de bitácora.</p></article>
+          <article><i data-lucide="clipboard-list"></i><span>Registro</span><h3>Bitácora Digital</h3><p>Obras, sesiones, puntos, fotos, GPS, mapas, reportes PDF, KMZ y ZIP de evidencias.</p></article>
+        </div>
+      </div>
+      <div class="android-info">
+        <div><span><i data-lucide="smartphone"></i> Android nativo en Java</span><span><i data-lucide="map"></i> Mapas con OpenStreetMap</span><span><i data-lucide="database"></i> Persistencia local SQLite</span></div>
+        <div><span><i data-lucide="badge-check"></i> Paquete com.cyc.suite</span><span><i data-lucide="file-archive"></i> APK de pruebas v0.1.0</span><span><i data-lucide="shield-alert"></i> Bloqueo debug de 30 días</span><span><i data-lucide="wrench"></i> Proyecto Android Studio</span></div>
+      </div>
+      <section class="android-release-panel" aria-label="Releases Android">
+        <div><span>RELEASES ANDROID</span><h3>CyC Mobile Suite v0.1.0</h3><p>Primera versión técnica documentada para pruebas internas. La publicación queda registrada sin APK público hasta preparar una compilación distribuible.</p></div>
+        <div class="android-release-status"><span><i data-lucide="package-x"></i> Sin APK adjunto</span><span><i data-lucide="shield-alert"></i> Build debug</span><span><i data-lucide="tag"></i> android-v0.1.0</span></div>
+      </section>
+      <section class="android-doc-panel" id="android-docs">
+        <div class="android-doc-heading"><div><span>DOCUMENTACIÓN ANDROID</span><h3>README técnico de CyC Mobile Suite</h3></div><a class="release-secondary" href="module-readmes/android.md"><i data-lucide="file-text"></i><span>Abrir fuente</span></a></div>
+        <article class="detail-content android-readme" data-android-content><p>Cargando documentación Android...</p></article>
+      </section>
     </div></section>
   </main>
 

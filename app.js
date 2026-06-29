@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pipelineFlow = document.querySelector("[data-pipeline-flow]");
   const relatedDocs = document.querySelector("[data-related-docs]");
   const resolveContent = document.querySelector("[data-resolve-content]");
+  const androidContent = document.querySelector("[data-android-content]");
 
   async function fetchMarkdown(path) {
     const response = await fetch(path);
@@ -132,6 +133,16 @@ document.addEventListener("DOMContentLoaded", () => {
       resolveContent.innerHTML = markdownToHtml(markdown);
     } catch {
       resolveContent.innerHTML = "<p>No fue posible cargar el documento técnico CyC Resolve.</p>";
+    }
+  }
+
+  async function loadAndroidDocument() {
+    if (!androidContent) return;
+    try {
+      const markdown = await fetchMarkdown("module-readmes/android.md");
+      androidContent.innerHTML = markdownToHtml(markdown);
+    } catch {
+      androidContent.innerHTML = "<p>No fue posible cargar la documentación Android.</p>";
     }
   }
 
@@ -212,8 +223,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   loadResolveDocument();
+  loadAndroidDocument();
 
   document.querySelectorAll("[data-current-year]").forEach(node => node.textContent = new Date().getFullYear());
+
+  function formatBytes(bytes) {
+    if (!Number.isFinite(bytes) || bytes <= 0) return "";
+    const units = ["B", "KB", "MB", "GB"];
+    let size = bytes, unit = 0;
+    while (size >= 1024 && unit < units.length - 1) {
+      size /= 1024;
+      unit += 1;
+    }
+    return `${size.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
+  }
+
   fetch("versions.json")
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
@@ -231,10 +255,26 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(release => {
       const version = release.tag_name || "Versión estable";
       const date = release.published_at ? new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(new Date(release.published_at)) : "Publicación oficial";
+      const installer = release.assets?.find(asset => /\.exe$/i.test(asset.name)) || release.assets?.[0];
+      const releaseUrl = release.html_url || "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest";
+      const downloadUrl = installer?.browser_download_url || releaseUrl;
       document.querySelectorAll("[data-release-version]").forEach(node => node.textContent = version);
       document.querySelectorAll("[data-release-date]").forEach(node => node.textContent = `Publicada el ${date}`);
       document.querySelectorAll("[data-release-name]").forEach(node => node.textContent = release.name || "CyC Topografía Suite para Windows");
-      document.querySelectorAll("[data-release-link]").forEach(node => node.href = release.html_url);
+      document.querySelectorAll("[data-release-link]").forEach(node => node.href = downloadUrl);
+      document.querySelectorAll("[data-release-page]").forEach(node => node.href = releaseUrl);
+      document.querySelectorAll("[data-release-asset]").forEach(node => node.textContent = installer?.name || "Ver archivos de la publicación");
+      document.querySelectorAll("[data-release-size]").forEach(node => {
+        const size = formatBytes(installer?.size);
+        node.textContent = size ? `Tamaño: ${size}` : "";
+        node.hidden = !size;
+      });
+      document.querySelectorAll("[data-release-sha]").forEach(node => {
+        const sha = installer?.digest?.replace(/^sha256:/i, "").toUpperCase();
+        node.textContent = sha ? `SHA-256: ${sha.slice(0, 12)}...${sha.slice(-8)}` : "";
+        node.title = sha ? `SHA-256: ${sha}` : "";
+        node.hidden = !sha;
+      });
     }).catch(() => {});
 
   const canvas = document.getElementById("fieldCanvas");
