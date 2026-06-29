@@ -242,7 +242,8 @@
   justify-content: flex-end;
 }
 
-.android-release-status span {
+.android-release-status span,
+.android-release-status a {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -251,6 +252,12 @@
   border: 1px solid #ffffff1f;
   border-radius: 6px;
   color: #fff;
+}
+
+.android-release-status a {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: #172016;
 }
 
 .android-release-status svg {
