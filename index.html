@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="android-detail.css?v=20260629">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260629f" defer></script>
+  <script src="app.js?v=20260629g" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -164,24 +164,32 @@
             <div class="phone-status"><span></span><b>CyC Mobile</b><i></i></div>
             <div class="phone-hero"><small>CAMPO Y GABINETE</small><strong>Herramientas móviles</strong><p>Geodesia, CAD, bitácora y conversión de datos en sitio.</p></div>
             <div class="phone-tools">
-              <span><i data-lucide="map-pinned"></i> Conversor</span>
-              <span><i data-lucide="calculator"></i> Factores GNSS</span>
-              <span><i data-lucide="ruler"></i> Linderos</span>
-              <span><i data-lucide="file-cog"></i> DataLink</span>
-              <span><i data-lucide="drafting-compass"></i> Visor CAD</span>
-              <span><i data-lucide="clipboard-list"></i> Bitácora</span>
+              <button type="button" data-android-tool="Conversor Geodesico"><i data-lucide="map-pinned"></i> Conversor</button>
+              <button type="button" data-android-tool="Factores GNSS"><i data-lucide="calculator"></i> Factores GNSS</button>
+              <button type="button" data-android-tool="Ajuste de Linderos"><i data-lucide="ruler"></i> Linderos</button>
+              <button type="button" data-android-tool="DataLink Converter"><i data-lucide="file-cog"></i> DataLink</button>
+              <button type="button" data-android-tool="Visor CAD"><i data-lucide="drafting-compass"></i> Visor CAD</button>
+              <button type="button" data-android-tool="Bitacora Digital"><i data-lucide="clipboard-list"></i> Bitácora</button>
             </div>
           </div>
         </div>
         <div class="android-tool-grid">
-          <article><i data-lucide="map-pinned"></i><span>Geodesia</span><h3>Conversor Geodésico</h3><p>Coordenadas geográficas, UTM y TME con soporte para WGS84 / ITRF2008 y NAD27.</p></article>
-          <article><i data-lucide="calculator"></i><span>GNSS</span><h3>Factores GNSS</h3><p>Factor de cuadrícula, elevación, combinado, CAD inverso y selección desde mapa OpenStreetMap.</p></article>
-          <article><i data-lucide="ruler"></i><span>Campo</span><h3>Ajuste de Linderos</h3><p>Importación de puntos, ajuste lineal, longitud, azimut, RMSE, R2 e intersección de tramos.</p></article>
-          <article><i data-lucide="cable"></i><span>Estación total</span><h3>DataLink Converter</h3><p>Normalización móvil de Sokkia SDR, Foif RTS DAT, Stonex / Leica GSI y exportación para CAD.</p></article>
-          <article><i data-lucide="drafting-compass"></i><span>Gabinete móvil</span><h3>Visor CAD</h3><p>DXF ASCII, zoom, pan, consulta de coordenadas, snap, medición y capa de puntos de bitácora.</p></article>
-          <article><i data-lucide="clipboard-list"></i><span>Registro</span><h3>Bitácora Digital</h3><p>Obras, sesiones, puntos, fotos, GPS, mapas, reportes PDF, KMZ y ZIP de evidencias.</p></article>
+          <button type="button" data-android-tool="Conversor Geodesico"><i data-lucide="map-pinned"></i><span>Geodesia</span><h3>Conversor Geodésico</h3><p>Coordenadas geográficas, UTM y TME con soporte para WGS84 / ITRF2008 y NAD27.</p></button>
+          <button type="button" data-android-tool="Factores GNSS"><i data-lucide="calculator"></i><span>GNSS</span><h3>Factores GNSS</h3><p>Factor de cuadrícula, elevación, combinado, CAD inverso y selección desde mapa OpenStreetMap.</p></button>
+          <button type="button" data-android-tool="Ajuste de Linderos"><i data-lucide="ruler"></i><span>Campo</span><h3>Ajuste de Linderos</h3><p>Importación de puntos, ajuste lineal, longitud, azimut, RMSE, R2 e intersección de tramos.</p></button>
+          <button type="button" data-android-tool="DataLink Converter"><i data-lucide="cable"></i><span>Estación total</span><h3>DataLink Converter</h3><p>Normalización móvil de Sokkia SDR, Foif RTS DAT, Stonex / Leica GSI y exportación para CAD.</p></button>
+          <button type="button" data-android-tool="Visor CAD"><i data-lucide="drafting-compass"></i><span>Gabinete móvil</span><h3>Visor CAD</h3><p>DXF ASCII, zoom, pan, consulta de coordenadas, snap, medición y capa de puntos de bitácora.</p></button>
+          <button type="button" data-android-tool="Bitacora Digital"><i data-lucide="clipboard-list"></i><span>Registro</span><h3>Bitácora Digital</h3><p>Obras, sesiones, puntos, fotos, GPS, mapas, reportes PDF, KMZ y ZIP de evidencias.</p></button>
         </div>
       </div>
+      <section class="android-tool-detail" aria-live="polite" hidden>
+        <div class="detail-accent"></div>
+        <div class="detail-toolbar">
+          <div><span data-android-detail-category>HERRAMIENTA ANDROID</span><h3 data-android-detail-title>Información de la herramienta</h3></div>
+          <button class="android-detail-close" type="button" aria-label="Cerrar información"><i data-lucide="x"></i></button>
+        </div>
+        <article class="detail-content android-tool-content" data-android-detail-content></article>
+      </section>
       <div class="android-info">
         <div><span><i data-lucide="smartphone"></i> Android nativo en Java</span><span><i data-lucide="map"></i> Mapas con OpenStreetMap</span><span><i data-lucide="database"></i> Persistencia local SQLite</span></div>
         <div><span><i data-lucide="badge-check"></i> Paquete com.cyc.suite</span><span><i data-lucide="file-archive"></i> APK beta v0.1.0</span><span><i data-lucide="shield-alert"></i> Bloqueo debug de 30 días</span><span><i data-lucide="wrench"></i> Proyecto Android Studio</span></div>

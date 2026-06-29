@@ -118,7 +118,7 @@
   margin-top: 18px;
 }
 
-.phone-tools span {
+.phone-tools button {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -126,9 +126,19 @@
   padding: 0 12px;
   border-radius: 12px;
   background: #ffffff;
+  border: 0;
   color: #26352b;
+  cursor: pointer;
   font-size: 11px;
   font-weight: 800;
+  text-align: left;
+  transition: .2s;
+}
+
+.phone-tools button:hover,
+.phone-tools button.selected {
+  background: #f8c719;
+  transform: translateY(-1px);
 }
 
 .phone-tools svg {
@@ -141,14 +151,30 @@
   gap: 12px;
 }
 
-.android-tool-grid article {
+.android-tool-grid button {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 22px;
+  cursor: pointer;
+  min-height: 365px;
+  text-align: left;
+  transition: .2s;
 }
 
-.android-tool-grid article > svg {
+.android-tool-grid button:hover,
+.android-tool-grid button.selected {
+  border-color: #9bb8a2;
+  box-shadow: 0 14px 30px #173b2a14;
+  transform: translateY(-3px);
+}
+
+.android-tool-grid button.selected {
+  outline: 2px solid #f8c719;
+  outline-offset: -2px;
+}
+
+.android-tool-grid button > svg {
   width: 28px;
   height: 28px;
   color: var(--g700);
@@ -173,6 +199,29 @@
   color: var(--muted);
   font-size: 12px;
   margin: 0;
+}
+
+.android-tool-detail {
+  --detail-accent: #f8c719;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 44px #173b2a12;
+}
+
+.android-tool-detail[hidden] {
+  display: none;
+}
+
+.android-tool-detail .detail-accent {
+  height: 5px;
+  background: var(--detail-accent);
+}
+
+.android-tool-content {
+  padding: 24px;
 }
 
 .android-info {

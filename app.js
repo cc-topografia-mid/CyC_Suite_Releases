@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cacheKey = "20260629f";
+  const cacheKey = "20260629g";
 
   if (window.lucide) window.lucide.createIcons();
 
@@ -117,6 +117,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const relatedDocs = document.querySelector("[data-related-docs]");
   const resolveContent = document.querySelector("[data-resolve-content]");
   const androidContent = document.querySelector("[data-android-content]");
+  const androidDetailPanel = document.querySelector(".android-tool-detail");
+  const androidDetailTitle = document.querySelector("[data-android-detail-title]");
+  const androidDetailCategory = document.querySelector("[data-android-detail-category]");
+  const androidDetailContent = document.querySelector("[data-android-detail-content]");
+  let androidMarkdown = "";
+
+  const androidToolMeta = {
+    "Conversor Geodesico": { title: "Conversor Geodésico", category: "Geodesia", accent: "#f8c719" },
+    "Factores GNSS": { title: "Factores GNSS", category: "GNSS", accent: "#326334" },
+    "Ajuste de Linderos": { title: "Ajuste de Linderos", category: "Campo", accent: "#14b8a6" },
+    "DataLink Converter": { title: "DataLink Converter", category: "Estación total", accent: "#e87920" },
+    "Visor CAD": { title: "Visor CAD", category: "Gabinete móvil", accent: "#3b82f6" },
+    "Bitacora Digital": { title: "Bitácora Digital", category: "Registro", accent: "#0f766e" }
+  };
 
   async function fetchMarkdown(path) {
     const separator = path.includes("?") ? "&" : "?";
@@ -142,11 +156,52 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadAndroidDocument() {
     if (!androidContent) return;
     try {
-      const markdown = await fetchMarkdown("module-readmes/android-usuario.md");
-      androidContent.innerHTML = markdownToHtml(markdown);
+      androidMarkdown = await fetchMarkdown("module-readmes/android-usuario.md");
+      androidContent.innerHTML = markdownToHtml(androidMarkdown);
     } catch {
       androidContent.innerHTML = "<p>No fue posible cargar la documentación Android.</p>";
     }
+  }
+
+  async function ensureAndroidMarkdown() {
+    if (androidMarkdown) return androidMarkdown;
+    androidMarkdown = await fetchMarkdown("module-readmes/android-usuario.md");
+    return androidMarkdown;
+  }
+
+  function extractAndroidToolSection(markdown, heading) {
+    const lines = markdown.split(/\r?\n/);
+    const start = lines.findIndex(line => line.trim() === `### ${heading}`);
+    if (start === -1) return "";
+    let end = lines.length;
+    for (let index = start + 1; index < lines.length; index += 1) {
+      if (/^#{2,3}\s+/.test(lines[index])) {
+        end = index;
+        break;
+      }
+    }
+    return lines.slice(start, end).join("\n").trim();
+  }
+
+  async function openAndroidTool(toolKey) {
+    if (!androidDetailPanel || !androidDetailTitle || !androidDetailCategory || !androidDetailContent) return;
+    const meta = androidToolMeta[toolKey];
+    if (!meta) return;
+    document.querySelectorAll("[data-android-tool]").forEach(item => item.classList.toggle("selected", item.dataset.androidTool === toolKey));
+    androidDetailPanel.style.setProperty("--detail-accent", meta.accent);
+    androidDetailTitle.textContent = meta.title;
+    androidDetailCategory.textContent = `${meta.category} · CyC Mobile Suite`;
+    androidDetailContent.innerHTML = "<p>Cargando documentación...</p>";
+    androidDetailPanel.hidden = false;
+    try {
+      const markdown = await ensureAndroidMarkdown();
+      const section = extractAndroidToolSection(markdown, toolKey);
+      androidDetailContent.innerHTML = section ? markdownToHtml(section) : "<p>No fue posible encontrar la descripción de esta herramienta en el README de usuario.</p>";
+    } catch {
+      androidDetailContent.innerHTML = "<p>No fue posible cargar la documentación de esta herramienta.</p>";
+    }
+    androidDetailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (window.lucide) window.lucide.createIcons();
   }
 
   function renderRelatedDocs(card) {
@@ -214,6 +269,11 @@ document.addEventListener("DOMContentLoaded", () => {
     detailPanel.hidden = true;
     if (relatedDocs) relatedDocs.hidden = true;
     document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
+  });
+  document.querySelectorAll("[data-android-tool]").forEach(tool => tool.addEventListener("click", () => openAndroidTool(tool.dataset.androidTool)));
+  document.querySelector(".android-detail-close")?.addEventListener("click", () => {
+    if (androidDetailPanel) androidDetailPanel.hidden = true;
+    document.querySelectorAll("[data-android-tool]").forEach(item => item.classList.remove("selected"));
   });
 
   document.querySelectorAll("[data-open-module]").forEach(link => {
