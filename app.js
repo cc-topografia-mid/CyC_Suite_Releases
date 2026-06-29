@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadResolveDocument() {
     if (!resolveContent) return;
     try {
-      const markdown = await fetchMarkdown("module-readmes/cyc-resolve.md");
+      const markdown = await fetchMarkdown("module-readmes/cyc-resolve.txt");
       resolveContent.innerHTML = markdownToHtml(markdown);
     } catch {
       resolveContent.innerHTML = "<p>No fue posible cargar el documento técnico CyC Resolve.</p>";
