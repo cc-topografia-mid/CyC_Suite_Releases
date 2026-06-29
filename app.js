@@ -112,6 +112,48 @@ document.addEventListener("DOMContentLoaded", () => {
   const pipelineTitle = document.querySelector("[data-pipeline-title]");
   const pipelineSummary = document.querySelector("[data-pipeline-summary]");
   const pipelineFlow = document.querySelector("[data-pipeline-flow]");
+  const relatedDocs = document.querySelector("[data-related-docs]");
+  const resolveContent = document.querySelector("[data-resolve-content]");
+
+  async function fetchMarkdown(path) {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`No se pudo cargar ${path}`);
+    return response.text();
+  }
+
+  function markdownToHtml(markdown) {
+    return window.marked ? window.marked.parse(markdown) : `<pre>${markdown}</pre>`;
+  }
+
+  async function loadResolveDocument() {
+    if (!resolveContent) return;
+    try {
+      const markdown = await fetchMarkdown("module-readmes/cyc-resolve.md");
+      resolveContent.innerHTML = markdownToHtml(markdown);
+    } catch {
+      resolveContent.innerHTML = "<p>No fue posible cargar el documento técnico CyC Resolve.</p>";
+    }
+  }
+
+  function renderRelatedDocs(card) {
+    if (!relatedDocs) return;
+    if (card.dataset.readme !== "postproceso") {
+      relatedDocs.hidden = true;
+      relatedDocs.innerHTML = "";
+      return;
+    }
+
+    relatedDocs.innerHTML = `
+      <div>
+        <span>DOCUMENTO FUNDAMENTAL</span>
+        <h4>CyC Resolve</h4>
+        <p>Respaldo técnico del método de postproceso, validación Integrity, IonoCore, GeoCore y trazabilidad de reportes.</p>
+      </div>
+      <a href="#cyc-resolve" class="resolve-link"><i data-lucide="file-text"></i><span>Leer documento técnico</span></a>
+    `;
+    relatedDocs.hidden = false;
+    if (window.lucide) window.lucide.createIcons();
+  }
 
   function renderPipeline(card) {
     const pipeline = modulePipelines[card.dataset.readme];
@@ -143,22 +185,33 @@ document.addEventListener("DOMContentLoaded", () => {
     detailContent.innerHTML = "<p>Cargando documentación...</p>";
     detailPipeline.hidden = true;
     try {
-      const response = await fetch(`module-readmes/${card.dataset.readme}.md`);
-      if (!response.ok) throw new Error();
-      const markdown = await response.text();
-      detailContent.innerHTML = window.marked ? window.marked.parse(markdown) : `<pre>${markdown}</pre>`;
+      const markdown = await fetchMarkdown(`module-readmes/${card.dataset.readme}.md`);
+      detailContent.innerHTML = markdownToHtml(markdown);
     } catch {
       detailContent.innerHTML = "<p>No fue posible cargar la documentación de este módulo.</p>";
     }
     renderPipeline(card);
+    renderRelatedDocs(card);
     detailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   document.querySelectorAll(".module-card").forEach(card => card.addEventListener("click", () => openModule(card)));
   document.querySelector(".detail-close")?.addEventListener("click", () => {
     detailPanel.hidden = true;
+    if (relatedDocs) relatedDocs.hidden = true;
     document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
   });
+
+  document.querySelectorAll("[data-open-module]").forEach(link => {
+    link.addEventListener("click", event => {
+      const card = document.querySelector(`.module-card[data-readme="${link.dataset.openModule}"]`);
+      if (!card) return;
+      event.preventDefault();
+      openModule(card);
+    });
+  });
+
+  loadResolveDocument();
 
   document.querySelectorAll("[data-current-year]").forEach(node => node.textContent = new Date().getFullYear());
   fetch("versions.json")

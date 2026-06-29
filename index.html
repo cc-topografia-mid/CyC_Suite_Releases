@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="module-detail.css?v=20260624">
+  <link rel="stylesheet" href="module-detail.css?v=20260629">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260624" defer></script>
+  <script src="app.js?v=20260629" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -24,12 +24,12 @@
         <span><strong>TOPOGRAFÍA</strong><small>Suite</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Navegación principal">
-        <a href="#modulos">Herramientas</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
+        <a href="#modulos">Herramientas</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
       </nav>
       <a class="nav-download" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest"><i data-lucide="download"></i> Descargar</a>
       <button class="menu-button" aria-label="Abrir menú" aria-expanded="false"><i data-lucide="menu"></i></button>
     </div>
-    <nav class="mobile-nav"><a href="#modulos">Herramientas</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
+    <nav class="mobile-nav"><a href="#modulos">Herramientas</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
   </header>
 
   <main id="contenido">
@@ -103,7 +103,34 @@
           </div>
           <div class="module-pipeline-flow" data-pipeline-flow></div>
         </section>
+        <section class="related-docs" data-related-docs hidden></section>
       </section>
+    </div></section>
+
+    <section class="resolve-section" id="cyc-resolve"><div class="section-shell resolve-shell">
+      <div class="resolve-heading">
+        <div>
+          <p class="section-kicker">Documento técnico fundamental</p>
+          <h2>CyC Resolve</h2>
+          <p>Marco metodológico del Motor Postproceso GNSS: orquestación RTKLIB-EX, validación Integrity, IonoCore, GeoCore, ranking FIX y trazabilidad de reportes.</p>
+        </div>
+        <div class="resolve-actions">
+          <a class="primary-button" href="#modulos" data-open-module="postproceso"><i data-lucide="radio-tower"></i><span>Ver módulo Postproceso</span></a>
+          <a class="secondary-button" href="module-readmes/cyc-resolve.md"><i data-lucide="file-text"></i> Abrir Markdown</a>
+        </div>
+      </div>
+      <div class="resolve-layout">
+        <aside class="resolve-index" aria-label="Componentes CyC Resolve">
+          <span>Familia tecnológica</span>
+          <a href="#cyc-resolve"><i data-lucide="cpu"></i> CyC Resolve</a>
+          <a href="#cyc-resolve"><i data-lucide="shield-check"></i> Resolve Integrity</a>
+          <a href="#cyc-resolve"><i data-lucide="activity"></i> IonoCore</a>
+          <a href="#cyc-resolve"><i data-lucide="mountain"></i> GeoCore</a>
+        </aside>
+        <article class="resolve-content detail-content" data-resolve-content>
+          <p>Cargando documento técnico CyC Resolve...</p>
+        </article>
+      </div>
     </div></section>
 
     <section class="pipeline-section" id="pipeline"><div class="section-shell pipeline-shell">
