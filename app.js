@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const cacheKey = "20260629e";
+
   if (window.lucide) window.lucide.createIcons();
 
   const modulePipelines = {
@@ -117,7 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const androidContent = document.querySelector("[data-android-content]");
 
   async function fetchMarkdown(path) {
-    const response = await fetch(path);
+    const separator = path.includes("?") ? "&" : "?";
+    const response = await fetch(`${path}${separator}v=${cacheKey}`, { cache: "no-store" });
     if (!response.ok) throw new Error(`No se pudo cargar ${path}`);
     return response.text();
   }
@@ -139,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadAndroidDocument() {
     if (!androidContent) return;
     try {
-      const markdown = await fetchMarkdown("module-readmes/android.md");
+      const markdown = await fetchMarkdown("module-readmes/android-usuario.md");
       androidContent.innerHTML = markdownToHtml(markdown);
     } catch {
       androidContent.innerHTML = "<p>No fue posible cargar la documentación Android.</p>";
@@ -238,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${size.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
   }
 
-  fetch("versions.json")
+  fetch(`versions-260627.json?v=${cacheKey}`, { cache: "no-store" })
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
       document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
