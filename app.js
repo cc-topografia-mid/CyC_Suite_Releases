@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cacheKey = "20260629g";
+  const cacheKey = "20260629h";
 
   if (window.lucide) window.lucide.createIcons();
 
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div>
         <span>DOCUMENTO FUNDAMENTAL</span>
         <h4>CyC Resolve</h4>
-        <p>Respaldo técnico del método de postproceso, validación Integrity, IonoCore, GeoCore y trazabilidad de reportes.</p>
+        <p>Documento externo de respaldo metodológico para interpretar reportes y componentes CyC Resolve sin exponer lógica propietaria.</p>
       </div>
       <a href="#cyc-resolve" class="resolve-link"><i data-lucide="file-text"></i><span>Leer documento técnico</span></a>
     `;

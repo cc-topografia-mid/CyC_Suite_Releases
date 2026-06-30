@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="android-detail.css?v=20260629">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260629g" defer></script>
+  <script src="app.js?v=20260629h" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -85,7 +85,7 @@
       <div class="section-heading"><div><p class="section-kicker">Directorio técnico</p><h2>Herramientas conectadas por un mismo flujo</h2></div><p>Cada módulo resuelve una etapa concreta sin romper la continuidad de los datos ni la trazabilidad del proyecto.</p></div>
       <div class="filter-tabs"><button class="active" data-filter="all">Todas</button><button data-filter="gnss">GNSS</button><button data-filter="field">Topografía</button><button data-filter="admin">Gestión</button></div>
       <div class="module-grid">
-        <button type="button" class="module-card" data-category="gnss" data-readme="postproceso" data-accent="#f8c719" style="--module-accent:#f8c719"><div class="module-icon"><i data-lucide="radio-tower"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0600</small></div><h3>Motor Postproceso GNSS</h3><p>RTKLIB-EX, CyC Resolve, ranking FIX, GeoCore, IonoCore y reportes técnicos auditables.</p></button>
+        <button type="button" class="module-card" data-category="gnss" data-readme="postproceso" data-accent="#f8c719" style="--module-accent:#f8c719"><div class="module-icon"><i data-lucide="radio-tower"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0600</small></div><h3>Motor Postproceso GNSS</h3><p>Postproceso GNSS con CyC Resolve, control documental, validación técnica y trazabilidad de resultados.</p></button>
         <button type="button" class="module-card" data-category="gnss" data-readme="rinex" data-accent="#3b82f6" style="--module-accent:#3b82f6"><div class="module-icon"><i data-lucide="file-input"></i></div><div class="module-meta"><span>GNSS</span><small>v260623.0100</small></div><h3>Asistente RINEX GNSS</h3><p>Bases INEGI, BRDC, SP3, CLK, ATX e IONEX preparados para postproceso.</p></button>
         <button type="button" class="module-card" data-category="gnss" data-readme="gnss" data-accent="#14b8a6" style="--module-accent:#14b8a6"><div class="module-icon"><i data-lucide="calculator"></i></div><div class="module-meta"><span>GNSS</span><small>v260525.2200</small></div><h3>Factores GNSS</h3><p>Factores de cuadrícula, elevación, combinado e inverso para Grid, Ground y CAD.</p></button>
         <button type="button" class="module-card" data-category="field" data-readme="conversiones" data-accent="#8b5cf6" style="--module-accent:#8b5cf6"><div class="module-icon"><i data-lucide="map-pinned"></i></div><div class="module-meta"><span>Coordenadas</span><small>v260527.2100</small></div><h3>Conversor Geodésico</h3><p>Conversiones geográficas, UTM y TME con parámetros configurables y criterio INEGI.</p></button>
@@ -117,7 +117,7 @@
         <div>
           <p class="section-kicker">Documento técnico fundamental</p>
           <h2>CyC Resolve</h2>
-          <p>Marco metodológico del Motor Postproceso GNSS: orquestación RTKLIB-EX, validación Integrity, IonoCore, GeoCore, ranking FIX y trazabilidad de reportes.</p>
+          <p>Documento técnico de respaldo externo para interpretar CyC Resolve, Resolve Integrity, IonoCore y GeoCore dentro del flujo de postproceso GNSS de CyC Topografía Suite.</p>
         </div>
         <div class="resolve-actions">
           <a class="primary-button" href="#modulos" data-open-module="postproceso"><i data-lucide="radio-tower"></i><span>Ver módulo Postproceso</span></a>
@@ -143,7 +143,7 @@
       <div class="pipeline-flow">
         <div class="flow-step"><span>01</span><i data-lucide="satellite"></i><div><b>Observación</b><small>Rover y estación base</small></div></div><div class="flow-line"></div>
         <div class="flow-step"><span>02</span><i data-lucide="file-stack"></i><div><b>Preparación</b><small>RINEX y productos precisos</small></div></div><div class="flow-line"></div>
-        <div class="flow-step"><span>03</span><i data-lucide="cpu"></i><div><b>Resolución</b><small>RTKLIB-EX y CyC Resolve</small></div></div><div class="flow-line"></div>
+        <div class="flow-step"><span>03</span><i data-lucide="cpu"></i><div><b>Resolución</b><small>Motor GNSS y CyC Resolve</small></div></div><div class="flow-line"></div>
         <div class="flow-step"><span>04</span><i data-lucide="file-check-2"></i><div><b>Entrega</b><small>Auditoría y reporte</small></div></div>
       </div>
     </div></section>
