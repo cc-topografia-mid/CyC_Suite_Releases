@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cacheKey = "20260629h";
+  const cacheKey = "20260630a";
 
   if (window.lucide) window.lucide.createIcons();
 
