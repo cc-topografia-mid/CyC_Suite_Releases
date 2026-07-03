@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cacheKey = "20260630a";
+  const cacheKey = "20260702a";
 
   if (window.lucide) window.lucide.createIcons();
 
@@ -132,6 +132,57 @@ document.addEventListener("DOMContentLoaded", () => {
     "Bitacora Digital": { title: "Bitácora Digital", category: "Registro", accent: "#0f766e" }
   };
 
+  const resolveTopics = {
+    resolve: {
+      eyebrow: "Marco general de procesamiento",
+      title: "CyC Resolve",
+      description: "Capa técnica de orquestación, validación y trazabilidad aplicada al postproceso GNSS dentro de CyC Topografía Suite.",
+      highlights: [
+        "Coordina archivos de observación, motores de cálculo, estrategias técnicas y reportes.",
+        "Agrega control de insumos, administración de estrategias y conservación de evidencia.",
+        "No debe entenderse como sinónimo de un único motor matemático."
+      ],
+      interpretation: "Procesado con CyC Resolve indica que el resultado fue obtenido bajo el flujo técnico de procesamiento, control y reporte de la suite.",
+      tags: ["Postproceso GNSS", "Trazabilidad", "Reporte técnico"]
+    },
+    integrity: {
+      eyebrow: "Filtro de calidad técnica",
+      title: "CyC Resolve Integrity",
+      description: "Capa de evaluación que revisa si una solución cuenta con evidencia suficiente para reportarse como resultado defendible.",
+      highlights: [
+        "Evalúa consistencia temporal, estabilidad y calidad observacional.",
+        "Distingue entre resultado calculado y resultado aceptado para reporte.",
+        "No modifica artificialmente coordenadas ni fuerza soluciones."
+      ],
+      interpretation: "Resultado validado por CyC Resolve Integrity significa que el resultado fue revisado mediante criterios internos de control de calidad.",
+      tags: ["Validación", "Consistencia", "Evidencia"]
+    },
+    ionocore: {
+      eyebrow: "Soporte ionosférico",
+      title: "CyC Resolve IonoCore",
+      description: "Componente encargado de gestionar información ionosférica disponible dentro del flujo de procesamiento GNSS.",
+      highlights: [
+        "Reconoce, evalúa o incorpora productos ionosféricos cuando el contexto técnico lo justifica.",
+        "Su intervención debe quedar documentada en el reporte cuando aplica.",
+        "La aplicación depende de compatibilidad, disponibilidad, cobertura y calidad de datos."
+      ],
+      interpretation: "Modelo ionosférico asistido por CyC Resolve IonoCore indica que se consideró información ionosférica dentro del proceso técnico.",
+      tags: ["IONEX", "Contexto técnico", "Modelo auxiliar"]
+    },
+    geocore: {
+      eyebrow: "Tratamiento vertical",
+      title: "CyC Resolve GeoCore",
+      description: "Capa posterior al cálculo GNSS para documentar la conversión entre altura elipsoidal y altura ortométrica cuando existe un modelo geoidal aplicable.",
+      highlights: [
+        "Permite registrar conversiones verticales mediante modelos geoidales reconocidos.",
+        "Si el modelo no puede aplicarse, conserva la altura elipsoidal original.",
+        "Documenta el motivo técnico cuando el modelo queda reconocido pero no aplicado."
+      ],
+      interpretation: "Conversión vertical por GeoCore indica que la altura ortométrica fue calculada o evaluada mediante un modelo geoidal reconocido.",
+      tags: ["Altura ortométrica", "Modelo geoidal", "H = h - N"]
+    }
+  };
+
   async function fetchMarkdown(path) {
     const separator = path.includes("?") ? "&" : "?";
     const response = await fetch(`${path}${separator}v=${cacheKey}`, { cache: "no-store" });
@@ -143,14 +194,36 @@ document.addEventListener("DOMContentLoaded", () => {
     return window.marked ? window.marked.parse(markdown) : `<pre>${markdown}</pre>`;
   }
 
-  async function loadResolveDocument() {
+  function renderResolveTopic(topicKey = "resolve") {
     if (!resolveContent) return;
-    try {
-      const markdown = await fetchMarkdown("module-readmes/cyc-resolve.txt");
-      resolveContent.innerHTML = markdownToHtml(markdown);
-    } catch {
-      resolveContent.innerHTML = "<p>No fue posible cargar el documento técnico CyC Resolve.</p>";
-    }
+    const topic = resolveTopics[topicKey] || resolveTopics.resolve;
+    document.querySelectorAll("[data-resolve-topic]").forEach(button => {
+      const selected = button.dataset.resolveTopic === topicKey;
+      button.classList.toggle("selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+    resolveContent.innerHTML = `
+      <div class="resolve-card-head">
+        <span>${topic.eyebrow}</span>
+        <h3>${topic.title}</h3>
+        <p>${topic.description}</p>
+      </div>
+      <div class="resolve-chip-row">
+        ${topic.tags.map(tag => `<span>${tag}</span>`).join("")}
+      </div>
+      <div class="resolve-highlights">
+        ${topic.highlights.map(item => `<div><i data-lucide="check-circle-2"></i><p>${item}</p></div>`).join("")}
+      </div>
+      <div class="resolve-interpretation">
+        <span>Lectura en reportes</span>
+        <p>${topic.interpretation}</p>
+      </div>
+      <div class="resolve-scope-note">
+        <i data-lucide="lock-keyhole"></i>
+        <p>La fuente pública resume el alcance metodológico sin exponer parámetros internos, reglas de decisión detalladas ni lógica propietaria completa.</p>
+      </div>
+    `;
+    if (window.lucide) window.lucide.createIcons();
   }
 
   async function loadAndroidDocument() {
@@ -271,6 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
   });
   document.querySelectorAll("[data-android-tool]").forEach(tool => tool.addEventListener("click", () => openAndroidTool(tool.dataset.androidTool)));
+  document.querySelectorAll("[data-resolve-topic]").forEach(button => button.addEventListener("click", () => renderResolveTopic(button.dataset.resolveTopic)));
   document.querySelector(".android-detail-close")?.addEventListener("click", () => {
     if (androidDetailPanel) androidDetailPanel.hidden = true;
     document.querySelectorAll("[data-android-tool]").forEach(item => item.classList.remove("selected"));
@@ -285,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  loadResolveDocument();
+  renderResolveTopic("resolve");
   loadAndroidDocument();
 
   document.querySelectorAll("[data-current-year]").forEach(node => node.textContent = new Date().getFullYear());

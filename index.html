@@ -13,13 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="module-detail.css?v=20260629">
+  <link rel="stylesheet" href="module-detail.css?v=20260702a">
   <link rel="stylesheet" href="release-detail.css?v=20260629">
   <link rel="stylesheet" href="android-detail.css?v=20260629">
   <link rel="stylesheet" href="licensing-detail.css?v=20260702">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260630a" defer></script>
+  <script src="app.js?v=20260702a" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -164,13 +164,13 @@
       <div class="resolve-layout">
         <aside class="resolve-index" aria-label="Componentes CyC Resolve">
           <span>Familia tecnológica</span>
-          <a href="#cyc-resolve"><i data-lucide="cpu"></i> CyC Resolve</a>
-          <a href="#cyc-resolve"><i data-lucide="shield-check"></i> Resolve Integrity</a>
-          <a href="#cyc-resolve"><i data-lucide="activity"></i> IonoCore</a>
-          <a href="#cyc-resolve"><i data-lucide="mountain"></i> GeoCore</a>
+          <button type="button" class="selected" data-resolve-topic="resolve"><i data-lucide="cpu"></i> CyC Resolve</button>
+          <button type="button" data-resolve-topic="integrity"><i data-lucide="shield-check"></i> Resolve Integrity</button>
+          <button type="button" data-resolve-topic="ionocore"><i data-lucide="activity"></i> IonoCore</button>
+          <button type="button" data-resolve-topic="geocore"><i data-lucide="mountain"></i> GeoCore</button>
         </aside>
-        <article class="resolve-content detail-content" data-resolve-content>
-          <p>Cargando documento técnico CyC Resolve...</p>
+        <article class="resolve-content" data-resolve-content>
+          <p>Cargando resumen técnico CyC Resolve...</p>
         </article>
       </div>
     </div></section>
