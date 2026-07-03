@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="module-detail.css?v=20260629">
   <link rel="stylesheet" href="release-detail.css?v=20260629">
   <link rel="stylesheet" href="android-detail.css?v=20260629">
+  <link rel="stylesheet" href="licensing-detail.css?v=20260702">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
   <script src="app.js?v=20260630a" defer></script>
@@ -29,12 +30,12 @@
         <span><strong>TOPOGRAFÍA</strong><small>Suite</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Navegación principal">
-        <a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
+        <a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#licencias">Licencias</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
       </nav>
       <a class="nav-download" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/download/v260627.1012/Instalador_CyC_Desktop_Suite_v260627_1012.exe"><i data-lucide="download"></i> Descargar</a>
       <button class="menu-button" aria-label="Abrir menú" aria-expanded="false"><i data-lucide="menu"></i></button>
     </div>
-    <nav class="mobile-nav"><a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
+    <nav class="mobile-nav"><a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#licencias">Licencias</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a></nav>
   </header>
 
   <main id="contenido">
@@ -79,6 +80,42 @@
     <section class="summary-band"><div class="summary-inner">
       <div><strong>8</strong><span>herramientas integradas</span></div><div><strong>RTKLIB-EX</strong><span>motor GNSS especializado</span></div>
       <div><strong>ES · EN · PT</strong><span>interfaz internacionalizada</span></div><div><strong>Windows</strong><span>distribución lista para instalar</span></div>
+    </div></section>
+
+    <section class="licensing-section" id="licencias"><div class="section-shell licensing-shell">
+      <div class="licensing-heading">
+        <div>
+          <p class="section-kicker">Licencias y apoyo al proyecto</p>
+          <h2>Mismo acceso funcional para usuarios Básico y Donador</h2>
+          <p>CyC Desktop Suite no bloquea herramientas, módulos, cálculos, exportaciones ni flujos de trabajo por estado de licencia. Las aportaciones ayudan a sostener el desarrollo y pueden pausar banners de apoyo cuando ese sistema esté activo.</p>
+        </div>
+        <a class="secondary-button" href="module-readmes/licencias-monetizacion.md"><i data-lucide="file-text"></i> Abrir política completa</a>
+      </div>
+      <div class="license-compare" aria-label="Comparativa de estados de licencia">
+        <article>
+          <div class="license-badge"><i data-lucide="user"></i><span>Básico</span></div>
+          <h3>Acceso completo sin aportación activa</h3>
+          <ul>
+            <li>Todas las herramientas disponibles.</li>
+            <li>Sin bloqueo de cálculos, módulos o exportaciones.</li>
+            <li>Puede mostrar banners discretos de apoyo cuando estén implementados.</li>
+          </ul>
+        </article>
+        <article>
+          <div class="license-badge donor"><i data-lucide="badge-check"></i><span>Donador</span></div>
+          <h3>Reconocimiento de apoyo económico</h3>
+          <ul>
+            <li>Mismas herramientas y flujos que el modo Básico.</li>
+            <li>El apoyo puede pausar banners durante el periodo correspondiente.</li>
+            <li>La validación puede conservar estado local para trabajo sin conexión.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="license-notes">
+        <div><i data-lucide="shield-check"></i><span><b>Licencia sin bloqueo funcional</b> El estado reconoce Básico o Donador; no decide acceso a herramientas.</span></div>
+        <div><i data-lucide="wifi-off"></i><span><b>Continuidad de campo</b> Si no hay internet, la Suite puede usar información local previamente validada.</span></div>
+        <div><i data-lucide="activity"></i><span><b>Telemetría opcional</b> Está desactivada por defecto y no valida licencias ni recopila archivos, coordenadas, rutas o identidad del usuario.</span></div>
+      </div>
     </div></section>
 
     <section class="modules-section" id="modulos"><div class="section-shell">
@@ -149,7 +186,7 @@
     </div></section>
 
     <section class="install-section" id="instalacion"><div class="section-shell install-grid">
-      <div class="install-copy"><p class="section-kicker">Instalación</p><h2>Lista para trabajar en Windows</h2><p>Descarga la publicación más reciente y ejecuta el instalador oficial. No necesitas preparar Python ni instalar librerías por separado.</p><div class="requirements"><span><i data-lucide="monitor"></i> Windows 10/11 x64</span><span><i data-lucide="hard-drive"></i> Instalación local</span><span><i data-lucide="wifi"></i> Internet para servicios GNSS</span></div></div>
+      <div class="install-copy"><p class="section-kicker">Instalación</p><h2>Lista para trabajar en Windows</h2><p>Descarga la publicación más reciente y ejecuta el instalador oficial. No necesitas preparar Python ni instalar librerías por separado.</p><div class="requirements"><span><i data-lucide="monitor"></i> Windows 10/11 x64</span><span><i data-lucide="hard-drive"></i> Instalación local</span><span><i data-lucide="wifi"></i> Internet para servicios GNSS</span><span><i data-lucide="badge-check"></i> Básico y Donador con las mismas herramientas</span></div></div>
       <div class="release-panel"><div class="release-panel-head"><span>ÚLTIMA PUBLICACIÓN</span><i data-lucide="package-check"></i></div><strong data-release-version>v260627.1012</strong><p data-release-name>CyC Desktop Suite v260627.1012</p><div class="release-meta"><span data-release-date>Publicada el 29 de junio de 2026</span><span data-release-asset>Instalador_CyC_Desktop_Suite_v260627_1012.exe</span><span data-release-size>Tamaño: 150.3 MB</span><span data-release-sha title="SHA-256: FF0BA37F365E0F4066CAB16E32B63C7BB87E89DE607687FD5553DB181C210EB1">SHA-256: FF0BA37F365E...C210EB1</span></div><a class="primary-button full" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/download/v260627.1012/Instalador_CyC_Desktop_Suite_v260627_1012.exe"><i data-lucide="download"></i><span>Descargar instalador .exe</span></a><a class="release-secondary" data-release-page href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/tag/v260627.1012"><i data-lucide="github"></i><span>Ver publicación y notas</span></a><small><i data-lucide="shield-check"></i> Instalador oficial publicado en GitHub Releases</small></div>
     </div></section>
 
