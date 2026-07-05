@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${size.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
   }
 
-  fetch(`versions-260627.json?v=${cacheKey}`, { cache: "no-store" })
+  fetch(`versions.json?v=${cacheKey}`, { cache: "no-store" })
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
       document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
