@@ -379,6 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
       document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
+      document.querySelectorAll("[data-installable-version]").forEach(node => node.textContent = `v${versions.desktop_release_version || versions.suite}`);
       const latestLabel = versions.latest_module === "desktop-release" ? "Última publicación Desktop" : `Última evolución: ${versions.latest_module}`;
       document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = latestLabel);
       document.querySelectorAll(".module-card").forEach(card => {
