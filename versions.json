@@ -1,7 +1,7 @@
 {
-  "suite": "260705.0046",
-  "desktop_release_version": "260705.0046",
-  "desktop_release_tag": "v260705.0046",
+  "suite": "260710.1127",
+  "desktop_release_version": "260710.1127",
+  "desktop_release_tag": "v260710.1127",
   "latest_module": "desktop-release",
   "modules": {
     "postproceso": "260623.0600",
