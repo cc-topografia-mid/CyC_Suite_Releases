@@ -1,16 +1,24 @@
 {
-  "suite": "260710.1127",
-  "desktop_release_version": "260710.1127",
-  "desktop_release_tag": "v260710.1127",
+  "suite": "260717.1233",
+  "desktop_release_version": "260717.1233",
+  "desktop_release_tag": "v260717.1233",
   "latest_module": "desktop-release",
-  "modules": {
-    "postproceso": "260623.0600",
-    "rinex": "260623.0100",
-    "gnss": "260525.2200",
-    "conversiones": "260527.2100",
-    "datalink": "260408.1500",
-    "linderos": "260428.1833",
-    "presupuestos": "260425.1120",
-    "control_personal": "260518.1000"
-  }
+  "news": [
+    {
+      "type": "Release Desktop",
+      "version": "v260710.1127",
+      "title": "CyC Desktop Suite v260710.1127",
+      "date": "10 de julio de 2026",
+      "summary": "Última publicación instalable para Windows con descarga oficial desde GitHub Releases.",
+      "description": "Última publicación instalable para Windows con descarga oficial desde GitHub Releases.",
+      "url": "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/tag/v260710.1127",
+      "highlights": [
+        "Instalador oficial para Windows publicado en GitHub Releases.",
+        "Página de distribución actualizada con versión instalable y enlace de descarga.",
+        "Notas de publicación vinculadas al release correspondiente."
+      ],
+      "screenshots": []
+    }
+  ],
+  "modules": {}
 }

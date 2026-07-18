@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function markdownToHtml(markdown) {
-    return window.marked ? window.marked.parse(markdown) : `<pre>${markdown}</pre>`;
+    return window.marked ? window.marked.parse(markdown) : `<pre>${escapeHtml(markdown)}</pre>`;
   }
 
   function renderResolveTopic(topicKey = "resolve") {
@@ -375,13 +375,75 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${size.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
   }
 
+  function summarizeReleaseBody(body = "") {
+    return String(body || "")
+      .split(/\r?\n/)
+      .map(line => line.replace(/^[-*#\s]+/, "").trim())
+      .filter(line => line && !/^versi[oó]n instalable/i.test(line) && !/^tag de publicaci[oó]n/i.test(line))
+      .slice(0, 3);
+  }
+
+  function escapeHtml(value = "") {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  let localNewsRendered = false;
+
+  function renderNews(items = []) {
+    const container = document.querySelector("[data-news-list]");
+    if (!container || !items.length) return;
+    container.innerHTML = items.slice(0, 3).map((item, index) => {
+      const title = escapeHtml(item.title || `CyC Desktop Suite ${item.version || ""}`.trim());
+      const type = escapeHtml(item.type || "Release Desktop");
+      const date = item.date ? `<time>${escapeHtml(item.date)}</time>` : "";
+      const highlights = Array.isArray(item.highlights) ? item.highlights.filter(Boolean).slice(0, 3) : [];
+      const rawDescription = item.description || item.summary || "Publicación oficial de CyC Topografía Suite.";
+      const description = markdownToHtml(rawDescription);
+      const screenshots = Array.isArray(item.screenshots) ? item.screenshots.filter(shot => shot && shot.src).slice(0, 4) : [];
+      const content = item.description
+        ? ""
+        : highlights.length
+        ? `<ul>${highlights.map(highlight => `<li>${escapeHtml(highlight)}</li>`).join("")}</ul>`
+        : `<p>${escapeHtml(item.summary || "Publicación oficial de CyC Topografía Suite.")}</p>`;
+      const gallery = screenshots.length
+        ? `<div class="news-shots" aria-label="Screenshots de ${title}">${screenshots.map((shot, shotIndex) => {
+            const src = escapeHtml(shot.src);
+            const alt = escapeHtml(shot.alt || `${title} screenshot ${shotIndex + 1}`);
+            return `<figure class="news-shot"><img src="${src}" alt="${alt}" loading="lazy"></figure>`;
+          }).join("")}</div>`
+        : "";
+      const url = escapeHtml(item.url || "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases");
+      return `
+        <article class="news-card ${index === 0 ? "featured-news" : ""}">
+          <div class="news-card-head"><span>${type}</span><i data-lucide="${index === 0 ? "sparkles" : "package-check"}"></i></div>
+          <h3>${title}</h3>
+          ${date}
+          <div class="news-description">${description}</div>
+          ${content}
+          ${gallery}
+          ${item.url ? `<a href="${url}"><i data-lucide="github"></i><span>Ver publicación</span></a>` : ""}
+        </article>
+      `;
+    }).join("");
+    if (window.lucide) window.lucide.createIcons();
+  }
+
   fetch(`versions.json?v=${cacheKey}`, { cache: "no-store" })
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
       document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
       document.querySelectorAll("[data-installable-version]").forEach(node => node.textContent = `v${versions.desktop_release_version || versions.suite}`);
-      const latestLabel = versions.latest_module === "desktop-release" ? "Última publicación Desktop" : `Última evolución: ${versions.latest_module}`;
+      const desktopVersion = versions.desktop_release_version || versions.suite;
+      const latestLabel = versions.latest_module === "desktop-release" ? `Última publicación Desktop v${desktopVersion}` : `Última evolución: ${versions.latest_module}`;
       document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = latestLabel);
+      if (Array.isArray(versions.news) && versions.news.length) {
+        renderNews(versions.news);
+        localNewsRendered = true;
+      }
       document.querySelectorAll(".module-card").forEach(card => {
         const version = versions.modules?.[card.dataset.readme];
         if (version) card.querySelector(".module-meta small").textContent = `v${version}`;
@@ -415,6 +477,25 @@ document.addEventListener("DOMContentLoaded", () => {
         node.hidden = !sha;
       });
     }).catch(() => {});
+
+  fetch("https://api.github.com/repos/cc-topografia-mid/CyC_Suite_Releases/releases?per_page=3", { headers: { Accept: "application/vnd.github+json" } })
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(releases => {
+      if (localNewsRendered) return;
+      const items = releases.filter(release => !release.draft).map(release => {
+        const date = release.published_at ? new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(new Date(release.published_at)) : "";
+        return {
+          type: release.prerelease ? "Pre-release Desktop" : "Release Desktop",
+          version: release.tag_name,
+          title: release.name || `CyC Desktop Suite ${release.tag_name || ""}`.trim(),
+          date,
+          highlights: summarizeReleaseBody(release.body),
+          url: release.html_url
+        };
+      });
+      renderNews(items);
+    })
+    .catch(() => {});
 
   const canvas = document.getElementById("fieldCanvas");
   if (!canvas) return;
