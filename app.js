@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cacheKey = "20260702a";
+  const cacheKey = "20260718-news-carousel-scroll";
 
   if (window.lucide) window.lucide.createIcons();
 
@@ -393,42 +393,159 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let localNewsRendered = false;
 
+  function plainTextFromMarkdown(value = "") {
+    return String(value || "")
+      .replace(/```[\s\S]*?```/g, " ")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/[*_~>#]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function normalizeNewsVersion(version = "") {
+    const text = String(version || "").trim();
+    if (!text) return "";
+    if (text.startsWith("v") || !/^\d/.test(text)) return text;
+    return `v${text}`;
+  }
+
+  function renderNewsCarousel(item, screenshots, index) {
+    if (!screenshots.length) return "";
+    const carouselId = `news-carousel-${index}`;
+    const first = screenshots[0];
+    return `
+      <div class="news-carousel" data-news-carousel="${carouselId}">
+        <div class="news-carousel-head">
+          <h4>Screenshots</h4>
+          <div>
+            <button type="button" data-carousel-prev="${carouselId}" aria-label="Screenshot anterior"><i data-lucide="chevron-left"></i></button>
+            <button type="button" data-carousel-next="${carouselId}" aria-label="Screenshot siguiente"><i data-lucide="chevron-right"></i></button>
+          </div>
+        </div>
+        <button type="button" class="news-carousel-main" data-carousel-open="${carouselId}" aria-label="Abrir screenshot en tamaño completo">
+          <img src="${escapeHtml(first.src)}" alt="${escapeHtml(first.alt || item.title || "Screenshot de novedades")}" loading="lazy" data-carousel-main="${carouselId}">
+          <span><i data-lucide="maximize-2"></i> Abrir imagen completa</span>
+        </button>
+        <div class="news-carousel-track" id="${carouselId}" tabindex="0" aria-label="Miniaturas de ${escapeHtml(item.title || item.version || "novedades")}">
+          ${screenshots.map((shot, shotIndex) => {
+            const src = escapeHtml(shot.src);
+            const alt = escapeHtml(shot.alt || `${item.title || "Novedades"} screenshot ${shotIndex + 1}`);
+            return `<button type="button" class="news-thumb ${shotIndex === 0 ? "active" : ""}" data-carousel-thumb="${carouselId}" data-src="${src}" data-alt="${alt}" aria-label="Mostrar screenshot ${shotIndex + 1}"><img src="${src}" alt="${alt}" loading="lazy"></button>`;
+          }).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function ensureNewsLightbox() {
+    let lightbox = document.querySelector("[data-news-lightbox]");
+    if (lightbox) return lightbox;
+    lightbox = document.createElement("div");
+    lightbox.className = "news-lightbox";
+    lightbox.dataset.newsLightbox = "true";
+    lightbox.hidden = true;
+    lightbox.innerHTML = `
+      <button type="button" class="news-lightbox-close" aria-label="Cerrar imagen"><i data-lucide="x"></i></button>
+      <img alt="">
+    `;
+    document.body.appendChild(lightbox);
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox || event.target.closest(".news-lightbox-close")) {
+        lightbox.hidden = true;
+      }
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") lightbox.hidden = true;
+    });
+    return lightbox;
+  }
+
+  function initNewsInteractions(container) {
+    const setCarouselImage = (carouselId, src, alt) => {
+      const main = container.querySelector(`[data-carousel-main="${carouselId}"]`);
+      if (!main) return;
+      main.src = src;
+      main.alt = alt || "Screenshot de novedades";
+      container.querySelectorAll(`[data-carousel-thumb="${carouselId}"]`).forEach(thumb => {
+        thumb.classList.toggle("active", thumb.dataset.src === src);
+      });
+    };
+    const moveCarousel = (carouselId, direction) => {
+      const thumbs = Array.from(container.querySelectorAll(`[data-carousel-thumb="${carouselId}"]`));
+      if (!thumbs.length) return;
+      const activeIndex = Math.max(0, thumbs.findIndex(thumb => thumb.classList.contains("active")));
+      const next = thumbs[(activeIndex + direction + thumbs.length) % thumbs.length];
+      setCarouselImage(carouselId, next.dataset.src, next.dataset.alt);
+      const track = document.getElementById(carouselId);
+      if (track) {
+        const targetLeft = next.offsetLeft - (track.clientWidth - next.clientWidth) / 2;
+        track.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+      }
+    };
+    container.querySelectorAll("[data-carousel-thumb]").forEach(button => {
+      button.addEventListener("click", () => setCarouselImage(button.dataset.carouselThumb, button.dataset.src, button.dataset.alt));
+    });
+    container.querySelectorAll("[data-carousel-prev],[data-carousel-next]").forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.carouselPrev || button.dataset.carouselNext;
+        const direction = button.dataset.carouselNext ? 1 : -1;
+        moveCarousel(id, direction);
+      });
+    });
+    container.querySelectorAll("[data-carousel-open]").forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.carouselOpen;
+        const main = container.querySelector(`[data-carousel-main="${id}"]`);
+        if (!main) return;
+        const lightbox = ensureNewsLightbox();
+        const image = lightbox.querySelector("img");
+        image.src = main.src;
+        image.alt = main.alt;
+        lightbox.hidden = false;
+        if (window.lucide) window.lucide.createIcons();
+      });
+    });
+    container.querySelectorAll("[data-news-carousel]").forEach(carousel => {
+      const id = carousel.dataset.newsCarousel;
+      window.setInterval(() => {
+        if (!document.hidden) moveCarousel(id, 1);
+      }, 5500);
+    });
+  }
+
   function renderNews(items = []) {
     const container = document.querySelector("[data-news-list]");
     if (!container || !items.length) return;
-    container.innerHTML = items.slice(0, 3).map((item, index) => {
-      const title = escapeHtml(item.title || `CyC Desktop Suite ${item.version || ""}`.trim());
+    container.innerHTML = items.slice(0, 1).map((item, index) => {
+      const version = normalizeNewsVersion(item.version);
+      const pageTitle = item.title || "ULTIMAS NOVEDADES";
       const type = escapeHtml(item.type || "Release Desktop");
       const date = item.date ? `<time>${escapeHtml(item.date)}</time>` : "";
-      const highlights = Array.isArray(item.highlights) ? item.highlights.filter(Boolean).slice(0, 3) : [];
-      const rawDescription = item.description || item.summary || "Publicación oficial de CyC Topografía Suite.";
-      const description = markdownToHtml(rawDescription);
-      const screenshots = Array.isArray(item.screenshots) ? item.screenshots.filter(shot => shot && shot.src).slice(0, 4) : [];
-      const content = item.description
-        ? ""
-        : highlights.length
-        ? `<ul>${highlights.map(highlight => `<li>${escapeHtml(highlight)}</li>`).join("")}</ul>`
-        : `<p>${escapeHtml(item.summary || "Publicación oficial de CyC Topografía Suite.")}</p>`;
-      const gallery = screenshots.length
-        ? `<div class="news-shots" aria-label="Screenshots de ${title}">${screenshots.map((shot, shotIndex) => {
-            const src = escapeHtml(shot.src);
-            const alt = escapeHtml(shot.alt || `${title} screenshot ${shotIndex + 1}`);
-            return `<figure class="news-shot"><img src="${src}" alt="${alt}" loading="lazy"></figure>`;
-          }).join("")}</div>`
-        : "";
+      const screenshots = Array.isArray(item.screenshots) ? item.screenshots.filter(shot => shot && shot.src).slice(0, 8) : [];
+      const latest = index === 0 ? `<span class="release-latest">Latest</span>` : "";
       const url = escapeHtml(item.url || "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases");
+      document.querySelectorAll("[data-news-title]").forEach(node => {
+        node.textContent = pageTitle;
+      });
       return `
-        <article class="news-card ${index === 0 ? "featured-news" : ""}">
-          <div class="news-card-head"><span>${type}</span><i data-lucide="${index === 0 ? "sparkles" : "package-check"}"></i></div>
-          <h3>${title}</h3>
-          ${date}
-          <div class="news-description">${description}</div>
-          ${content}
-          ${gallery}
-          ${item.url ? `<a href="${url}"><i data-lucide="github"></i><span>Ver publicación</span></a>` : ""}
+        <article class="news-board-card ${index === 0 ? "latest-release-card" : ""}">
+          <header class="release-notes-head">
+            <div>
+              <h3>${version || escapeHtml(pageTitle)} <small>(${type})</small> ${latest}</h3>
+              <p>${escapeHtml(item.summary || "Cambios destacados de la publicación.")}</p>
+            </div>
+            ${date}
+          </header>
+          <div class="news-markdown-board">
+            ${markdownToHtml(item.description || item.summary || "Sin descripcion de novedades.")}
+          </div>
+          ${renderNewsCarousel(item, screenshots, index)}
+          ${item.url ? `<a class="release-note-link" href="${url}"><i data-lucide="github"></i><span>Ver publicación en GitHub</span></a>` : ""}
         </article>
       `;
     }).join("");
+    initNewsInteractions(container);
     if (window.lucide) window.lucide.createIcons();
   }
 

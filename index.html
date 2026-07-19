@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css?v=20260717-news-md">
+  <link rel="stylesheet" href="index.css?v=20260718-news-board">
   <link rel="stylesheet" href="module-detail.css?v=20260702a">
   <link rel="stylesheet" href="release-detail.css?v=20260629">
   <link rel="stylesheet" href="android-detail.css?v=20260629">
   <link rel="stylesheet" href="licensing-detail.css?v=20260702">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260717-news-md" defer></script>
+  <script src="app.js?v=20260718-news-carousel-scroll" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -84,15 +84,22 @@
 
     <section class="news-section" id="novedades"><div class="section-shell">
       <div class="section-heading">
-        <div><p class="section-kicker">Novedades</p><h2>Últimas versiones de la Suite</h2></div>
+        <div><p class="section-kicker">Novedades</p><h2 data-news-title>ULTIMAS NOVEDADES</h2></div>
         <p>Consulta los cambios más recientes publicados para CyC Topografía Suite, con énfasis en releases instalables y notas de distribución.</p>
       </div>
       <div class="news-grid" data-news-list>
-        <article class="news-card featured-news">
-          <div class="news-card-head"><span>Release Desktop</span><i data-lucide="package-check"></i></div>
-          <h3>CyC Desktop Suite v260710.1127</h3>
-          <p>Última publicación instalable para Windows, enlazada al instalador oficial de GitHub Releases.</p>
-          <a data-release-page href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/tag/v260717.1233">Ver notas de publicación</a>
+        <article class="news-board-card latest-release-card">
+          <header class="release-notes-head">
+            <div>
+              <h3>v260717.1233 <small>(Release Desktop)</small> <span class="release-latest">Latest</span></h3>
+              <p>Última publicación instalable para Windows, enlazada al instalador oficial de GitHub Releases.</p>
+            </div>
+            <time>2026-07-17</time>
+          </header>
+          <div class="news-markdown-board">
+            <p>Página de distribución lista para mostrar novedades por versión y screenshots.</p>
+          </div>
+          <a class="release-note-link" data-release-page href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/tag/v260717.1233">Ver notas de publicación</a>
         </article>
       </div>
     </div></section>
