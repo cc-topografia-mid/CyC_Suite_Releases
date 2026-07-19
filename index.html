@@ -12,22 +12,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css?v=20260718-news-board">
+  <link rel="stylesheet" href="index.css?v=20260718-hero-real-shot">
   <link rel="stylesheet" href="module-detail.css?v=20260702a">
   <link rel="stylesheet" href="release-detail.css?v=20260629">
   <link rel="stylesheet" href="android-detail.css?v=20260629">
   <link rel="stylesheet" href="licensing-detail.css?v=20260702">
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="app.js?v=20260718-news-carousel-scroll" defer></script>
+  <script src="app.js?v=20260718-news-no-summary" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Ir al contenido</a>
   <header class="site-header">
     <div class="nav-shell">
       <a class="brand" href="#inicio" aria-label="CyC Topografía Suite">
-        <span class="brand-mark"><b>C</b><i>&amp;</i><b>C</b></span>
-        <span><strong>TOPOGRAFÍA</strong><small>Suite</small></span>
+        <img class="brand-logo" src="assets/logo-cyc-suite.png" alt="CyC Desktop Suite">
       </a>
       <nav class="desktop-nav" aria-label="Navegación principal">
         <a href="#modulos">Desktop</a><a href="#android">Android</a><a href="#novedades">Novedades</a><a href="#licencias">Licencias</a><a href="#cyc-resolve">CyC Resolve</a><a href="#pipeline">Pipeline</a><a href="#instalacion">Instalación</a>
@@ -44,7 +43,7 @@
       <div class="hero-inner">
         <div class="hero-copy">
           <p class="eyebrow"><span></span> Centro oficial de distribución</p>
-          <h1>CyC Topografía Suite</h1>
+          <h1 class="hero-logo-title"><img src="assets/logo-cyc-suite.png" alt="CyC Desktop Suite"></h1>
           <p class="hero-lead">Un Hub profesional para convertir observaciones GNSS, datos de campo y decisiones de ingeniería en resultados precisos, trazables y listos para entregar.</p>
           <div class="hero-actions">
             <a class="primary-button" data-release-link href="https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/download/v260717.1233/Instalador_CyC_Desktop_Suite_v260717_123303.exe"><i data-lucide="download"></i><span>Descargar para Windows</span></a>
@@ -52,27 +51,10 @@
           </div>
           <div class="release-inline"><span class="status-dot"></span><strong data-suite-version>Suite v260717.1233</strong><span data-installable-version hidden>v260717.1233</span><span data-latest-module>Última publicación Desktop v260717.1233</span></div>
         </div>
-        <div class="product-stage" aria-label="Vista conceptual del Hub CyC">
-          <div class="stage-window">
-            <div class="window-bar"><div><span></span> CyC Hub</div><div class="window-controls"><i></i><i></i><i></i></div></div>
-            <div class="window-body">
-              <aside class="mock-sidebar">
-                <div class="mock-logo">C<span>&amp;</span>C</div>
-                <div class="mock-nav active"><i data-lucide="satellite"></i><span>Procesamiento GNSS</span></div>
-                <div class="mock-nav"><i data-lucide="refresh-cw"></i><span>Conversión y formatos</span></div>
-                <div class="mock-nav"><i data-lucide="ruler"></i><span>Análisis topográfico</span></div>
-                <div class="mock-nav"><i data-lucide="briefcase-business"></i><span>Gestión administrativa</span></div>
-              </aside>
-              <div class="mock-content">
-                <small>DIRECTORIO DE HERRAMIENTAS</small><h2>Procesamiento GNSS</h2>
-                <div class="mock-tool active"><span><i data-lucide="radio-tower"></i></span><div><b>Motor Postproceso GNSS</b><small>RTKLIB-EX · CyC Resolve</small></div><em>Activo</em></div>
-                <div class="mock-tool"><span><i data-lucide="file-input"></i></span><div><b>Asistente RINEX GNSS</b><small>INEGI · IONEX · Pipeline</small></div><em>Activo</em></div>
-                <div class="mock-tool"><span><i data-lucide="calculator"></i></span><div><b>Factores GNSS</b><small>Grid · Ground · CAD</small></div><em>Activo</em></div>
-                <div class="mock-metrics"><span><b>8</b> herramientas</span><span><b>3</b> idiomas</span><span><b>1</b> flujo</span></div>
-              </div>
-            </div>
+        <div class="product-stage" aria-label="Captura real del Hub CyC Desktop Suite">
+          <div class="hero-screenshot-frame">
+            <img src="assets/hero-desktop-suite.png" alt="Captura de CyC Desktop Suite mostrando el directorio de herramientas">
           </div>
-          <div class="coordinate-tag tag-a"><span>FIX</span> Q=1</div><div class="coordinate-tag tag-b"><span>UTM</span> Z16Q</div>
         </div>
       </div>
     </section>
@@ -265,7 +247,7 @@
   </main>
 
   <footer>
-    <div class="footer-inner"><a class="brand footer-brand" href="#inicio"><span class="brand-mark"><b>C</b><i>&amp;</i><b>C</b></span><span><strong>TOPOGRAFÍA</strong><small>Suite</small></span></a><p>Ingeniería aplicada a geodesia, topografía y gestión técnica.</p><div class="footer-links"><a href="https://github.com/cc-topografia-mid/CyC_Suite_Releases"><i data-lucide="github"></i> Repositorio</a><a href="mailto:christian@topografia.cc"><i data-lucide="mail"></i> Contacto</a></div></div>
+    <div class="footer-inner"><a class="brand footer-brand" href="#inicio"><img class="brand-logo" src="assets/logo-cyc-suite.png" alt="CyC Desktop Suite"></a><p>Ingeniería aplicada a geodesia, topografía y gestión técnica.</p><div class="footer-links"><a href="https://github.com/cc-topografia-mid/CyC_Suite_Releases"><i data-lucide="github"></i> Repositorio</a><a href="mailto:christian@topografia.cc"><i data-lucide="mail"></i> Contacto</a></div></div>
     <div class="footer-bottom"><span>© <span data-current-year></span> CyC Topografía · Mérida, Yucatán, México</span><a href="#inicio">Volver arriba <i data-lucide="arrow-up"></i></a></div>
   </footer>
 </body>

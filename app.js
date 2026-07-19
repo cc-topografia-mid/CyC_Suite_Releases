@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cacheKey = "20260718-news-carousel-scroll";
+  const cacheKey = "20260718-news-no-summary";
 
   if (window.lucide) window.lucide.createIcons();
 
@@ -532,8 +532,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <article class="news-board-card ${index === 0 ? "latest-release-card" : ""}">
           <header class="release-notes-head">
             <div>
-              <h3>${version || escapeHtml(pageTitle)} <small>(${type})</small> ${latest}</h3>
-              <p>${escapeHtml(item.summary || "Cambios destacados de la publicación.")}</p>
+                <h3>${version || escapeHtml(pageTitle)} <small>(${type})</small> ${latest}</h3>
             </div>
             ${date}
           </header>
