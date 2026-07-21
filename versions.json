@@ -1,12 +1,12 @@
 {
   "suite": "260717.1120",
   "desktop_release_version": "260717.1120",
-  "desktop_release_tag": "v260717.1233",
+  "desktop_release_tag": "v260717.1120",
   "latest_module": "desktop-release",
   "news": [
     {
       "type": "Desktop Release",
-      "version": "v260717.1233",
+      "version": "v260717.1120",
       "title": "ULTIMAS NOVEDADES",
       "date": "18 de julio de 2026",
       "summary": "Nos complace presentar la nueva versión de CyC Topografía Suite (v260717.1233). Este release introduce herramientas de vanguardia para la generación de entregables cartográficos y estandariza la producción de reportes té",

@@ -102,7 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
     button.classList.add("active");
     const filter = button.dataset.filter;
     document.querySelectorAll(".module-card").forEach(card => {
-      card.classList.toggle("is-hidden", filter !== "all" && card.dataset.category !== filter);
+      const categories = (card.dataset.category || "").split(/\s+/).filter(Boolean);
+      card.classList.toggle("is-hidden", filter !== "all" && !categories.includes(filter));
     });
   }));
 
@@ -548,12 +549,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.lucide) window.lucide.createIcons();
   }
 
+  let versionsTagSet = false;
+
   fetch(`versions.json?v=${cacheKey}`, { cache: "no-store" })
     .then(response => response.ok ? response.json() : Promise.reject())
     .then(versions => {
-      document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
-      document.querySelectorAll("[data-installable-version]").forEach(node => node.textContent = `v${versions.desktop_release_version || versions.suite}`);
       const desktopVersion = versions.desktop_release_version || versions.suite;
+      const desktopTag = versions.desktop_release_tag || `v${desktopVersion}`;
+      document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
+      document.querySelectorAll("[data-installable-version]").forEach(node => node.textContent = `v${desktopVersion}`);
+      document.querySelectorAll("[data-release-version]").forEach(node => node.textContent = desktopTag);
+      document.querySelectorAll("[data-release-name]").forEach(node => node.textContent = `CyC Desktop Suite v${desktopVersion}`);
+      versionsTagSet = true;
       const latestLabel = versions.latest_module === "desktop-release" ? `Última publicación Desktop v${desktopVersion}` : `Última evolución: ${versions.latest_module}`;
       document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = latestLabel);
       if (Array.isArray(versions.news) && versions.news.length) {
@@ -575,9 +582,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const installer = release.assets?.find(asset => /\.exe$/i.test(asset.name)) || release.assets?.[0];
       const releaseUrl = release.html_url || "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest";
       const downloadUrl = installer?.browser_download_url || releaseUrl;
-      document.querySelectorAll("[data-release-version]").forEach(node => node.textContent = version);
+      if (!versionsTagSet) {
+        document.querySelectorAll("[data-release-version]").forEach(node => node.textContent = version);
+      }
       document.querySelectorAll("[data-release-date]").forEach(node => node.textContent = `Publicada el ${date}`);
-      document.querySelectorAll("[data-release-name]").forEach(node => node.textContent = release.name || "CyC Topografía Suite para Windows");
+      if (!versionsTagSet) {
+        document.querySelectorAll("[data-release-name]").forEach(node => node.textContent = release.name || "CyC Topografía Suite para Windows");
+      }
       document.querySelectorAll("[data-release-link]").forEach(node => node.href = downloadUrl);
       document.querySelectorAll("[data-release-page]").forEach(node => node.href = releaseUrl);
       document.querySelectorAll("[data-release-asset]").forEach(node => node.textContent = installer?.name || "Ver archivos de la publicación");
