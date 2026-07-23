@@ -1,0 +1,660 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const cacheKey = "20260718-news-no-summary";
+
+  if (window.lucide) window.lucide.createIcons();
+
+  const modulePipelines = {
+    postproceso: {
+      summary: "Convierte observaciones satelitales en una solución geodésica evaluada, auditable y lista para entregar.",
+      steps: [
+        ["satellite", "Observaciones", "Rover, base y metadatos RINEX"],
+        ["scan-search", "Diagnóstico", "Compatibilidad, calidad y estrategia"],
+        ["cpu", "Procesamiento", "RTKLIB-EX y modelos geodésicos"],
+        ["badge-check", "Resolución", "Ranking, consenso y validación FIX"],
+        ["file-check-2", "Entrega", "POS, reporte y sidecar _cyc.json"]
+      ]
+    },
+    rinex: {
+      summary: "Prepara automáticamente la estación base y los productos geodésicos requeridos por la sesión.",
+      steps: [
+        ["file-input", "Lectura Rover", "Fecha, época y posición aproximada"],
+        ["map-pin-check", "Selección Base", "Estación INEGI compatible"],
+        ["cloud-download", "Descarga", "RINEX, BRDC, SP3, CLK, ATX e IONEX"],
+        ["file-cog", "Preparación", "Descompresión, unión y homologación"],
+        ["package-check", "Paquete GNSS", "Archivos listos para postproceso"]
+      ]
+    },
+    gnss: {
+      summary: "Calcula y verifica factores geodésicos para trabajar coherentemente entre Grid, Ground y CAD.",
+      steps: [
+        ["map-pinned", "Coordenadas", "Ubicación, zona y sistema de referencia"],
+        ["mountain", "Elevación", "Altura y radio terrestre efectivo"],
+        ["calculator", "Cálculo", "Factor de cuadrícula y elevación"],
+        ["combine", "Factor Combinado", "Directo e inverso"],
+        ["file-output", "Resultado", "Aplicación individual, lote o CAD"]
+      ]
+    },
+    conversiones: {
+      summary: "Transforma coordenadas entre representaciones geodésicas con parámetros controlados y resultados verificables.",
+      steps: [
+        ["table-properties", "Entrada", "Coordenadas y formato de origen"],
+        ["shield-check", "Validación", "Datum, zona, hemisferio y unidades"],
+        ["refresh-cw", "Transformación", "Geográficas, UTM o TME"],
+        ["crosshair", "Verificación", "Consistencia y precisión numérica"],
+        ["file-output", "Salida", "Resultados y exportación tabular"]
+      ]
+    },
+    datalink: {
+      summary: "Normaliza archivos de distintas estaciones totales y los conecta con un flujo de revisión y exportación CAD.",
+      steps: [
+        ["folder-input", "Archivo de Campo", "Sokkia, Foif, Stonex o Leica"],
+        ["scan-search", "Detección", "Marca, estructura y codificación"],
+        ["list-tree", "Normalización", "Puntos, códigos y observaciones"],
+        ["table-2", "Revisión", "Vista previa y correcciones"],
+        ["file-output", "Exportación", "Formatos interoperables y CAD"]
+      ]
+    },
+    linderos: {
+      summary: "Ajusta geometrías de colindancia mediante métodos robustos y documenta técnicamente el resultado.",
+      steps: [
+        ["waypoints", "Importación", "Puntos, códigos y tramos"],
+        ["filter", "Depuración", "Agrupación y descarte de atípicos"],
+        ["ruler", "Ajuste", "Regresión ortogonal y RANSAC"],
+        ["move-diagonal-2", "Geometría", "Offsets e intersecciones"],
+        ["notebook-tabs", "Dictamen", "Resultados y memoria técnica"]
+      ]
+    },
+    presupuestos: {
+      summary: "Estructura costos, análisis y avances para producir presupuestos y documentos administrativos consistentes.",
+      steps: [
+        ["library", "Catálogos", "Insumos, unidades y rendimientos"],
+        ["calculator", "APU", "Costos directos e integración"],
+        ["folder-kanban", "Proyecto", "Partidas, cantidades y avances"],
+        ["chart-no-axes-combined", "Control", "Totales, variaciones y sobrecostos"],
+        ["file-spreadsheet", "Entregables", "Reportes, Excel y documentos"]
+      ]
+    },
+    control_personal: {
+      summary: "Relaciona personal, obras y contratos para controlar asignaciones y financiamiento semanal por proyecto.",
+      steps: [
+        ["database", "Base Operativa", "Selección o creación del proyecto"],
+        ["users-round", "Personal", "Empleados, puestos y expedientes"],
+        ["briefcase-business", "Asignaciones", "Obras, contratos y periodos"],
+        ["calendar-range", "Cálculo Semanal", "Nómina y financiamiento"],
+        ["file-chart-column", "Seguimiento", "Historial y reportes de control"]
+      ]
+    }
+  };
+
+  const menuButton = document.querySelector(".menu-button");
+  const mobileNav = document.querySelector(".mobile-nav");
+  menuButton?.addEventListener("click", () => {
+    const open = mobileNav.classList.toggle("open");
+    menuButton.setAttribute("aria-expanded", String(open));
+  });
+  mobileNav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+    mobileNav.classList.remove("open");
+    menuButton?.setAttribute("aria-expanded", "false");
+  }));
+
+  document.querySelectorAll(".filter-tabs button").forEach(button => button.addEventListener("click", () => {
+    document.querySelectorAll(".filter-tabs button").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    const filter = button.dataset.filter;
+    document.querySelectorAll(".module-card").forEach(card => {
+      const categories = (card.dataset.category || "").split(/\s+/).filter(Boolean);
+      card.classList.toggle("is-hidden", filter !== "all" && !categories.includes(filter));
+    });
+  }));
+
+  const detailPanel = document.querySelector(".module-detail");
+  const detailTitle = document.querySelector("[data-detail-title]");
+  const detailCategory = document.querySelector("[data-detail-category]");
+  const detailContent = document.querySelector("[data-detail-content]");
+  const detailPipeline = document.querySelector("[data-detail-pipeline]");
+  const pipelineTitle = document.querySelector("[data-pipeline-title]");
+  const pipelineSummary = document.querySelector("[data-pipeline-summary]");
+  const pipelineFlow = document.querySelector("[data-pipeline-flow]");
+  const relatedDocs = document.querySelector("[data-related-docs]");
+  const resolveContent = document.querySelector("[data-resolve-content]");
+  const androidContent = document.querySelector("[data-android-content]");
+  const androidDetailPanel = document.querySelector(".android-tool-detail");
+  const androidDetailTitle = document.querySelector("[data-android-detail-title]");
+  const androidDetailCategory = document.querySelector("[data-android-detail-category]");
+  const androidDetailContent = document.querySelector("[data-android-detail-content]");
+  let androidMarkdown = "";
+
+  const androidToolMeta = {
+    "Conversor Geodesico": { title: "Conversor Geodésico", category: "Geodesia", accent: "#f8c719" },
+    "Factores GNSS": { title: "Factores GNSS", category: "GNSS", accent: "#326334" },
+    "Ajuste de Linderos": { title: "Ajuste de Linderos", category: "Campo", accent: "#14b8a6" },
+    "DataLink Converter": { title: "DataLink Converter", category: "Estación total", accent: "#e87920" },
+    "Visor CAD": { title: "Visor CAD", category: "Gabinete móvil", accent: "#3b82f6" },
+    "Bitacora Digital": { title: "Bitácora Digital", category: "Registro", accent: "#0f766e" }
+  };
+
+  const resolveTopics = {
+    resolve: {
+      eyebrow: "Marco general de procesamiento",
+      title: "CyC Resolve",
+      description: "Capa técnica de orquestación, validación y trazabilidad aplicada al postproceso GNSS dentro de CyC Topografía Suite.",
+      highlights: [
+        "Coordina archivos de observación, motores de cálculo, estrategias técnicas y reportes.",
+        "Agrega control de insumos, administración de estrategias y conservación de evidencia.",
+        "No debe entenderse como sinónimo de un único motor matemático."
+      ],
+      interpretation: "Procesado con CyC Resolve indica que el resultado fue obtenido bajo el flujo técnico de procesamiento, control y reporte de la suite.",
+      tags: ["Postproceso GNSS", "Trazabilidad", "Reporte técnico"]
+    },
+    integrity: {
+      eyebrow: "Filtro de calidad técnica",
+      title: "CyC Resolve Integrity",
+      description: "Capa de evaluación que revisa si una solución cuenta con evidencia suficiente para reportarse como resultado defendible.",
+      highlights: [
+        "Evalúa consistencia temporal, estabilidad y calidad observacional.",
+        "Distingue entre resultado calculado y resultado aceptado para reporte.",
+        "No modifica artificialmente coordenadas ni fuerza soluciones."
+      ],
+      interpretation: "Resultado validado por CyC Resolve Integrity significa que el resultado fue revisado mediante criterios internos de control de calidad.",
+      tags: ["Validación", "Consistencia", "Evidencia"]
+    },
+    ionocore: {
+      eyebrow: "Soporte ionosférico",
+      title: "CyC Resolve IonoCore",
+      description: "Componente encargado de gestionar información ionosférica disponible dentro del flujo de procesamiento GNSS.",
+      highlights: [
+        "Reconoce, evalúa o incorpora productos ionosféricos cuando el contexto técnico lo justifica.",
+        "Su intervención debe quedar documentada en el reporte cuando aplica.",
+        "La aplicación depende de compatibilidad, disponibilidad, cobertura y calidad de datos."
+      ],
+      interpretation: "Modelo ionosférico asistido por CyC Resolve IonoCore indica que se consideró información ionosférica dentro del proceso técnico.",
+      tags: ["IONEX", "Contexto técnico", "Modelo auxiliar"]
+    },
+    geocore: {
+      eyebrow: "Tratamiento vertical",
+      title: "CyC Resolve GeoCore",
+      description: "Capa posterior al cálculo GNSS para documentar la conversión entre altura elipsoidal y altura ortométrica cuando existe un modelo geoidal aplicable.",
+      highlights: [
+        "Permite registrar conversiones verticales mediante modelos geoidales reconocidos.",
+        "Si el modelo no puede aplicarse, conserva la altura elipsoidal original.",
+        "Documenta el motivo técnico cuando el modelo queda reconocido pero no aplicado."
+      ],
+      interpretation: "Conversión vertical por GeoCore indica que la altura ortométrica fue calculada o evaluada mediante un modelo geoidal reconocido.",
+      tags: ["Altura ortométrica", "Modelo geoidal", "H = h - N"]
+    }
+  };
+
+  async function fetchMarkdown(path) {
+    const separator = path.includes("?") ? "&" : "?";
+    const response = await fetch(`${path}${separator}v=${cacheKey}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`No se pudo cargar ${path}`);
+    return response.text();
+  }
+
+  function markdownToHtml(markdown) {
+    return window.marked ? window.marked.parse(markdown) : `<pre>${escapeHtml(markdown)}</pre>`;
+  }
+
+  function renderResolveTopic(topicKey = "resolve") {
+    if (!resolveContent) return;
+    const topic = resolveTopics[topicKey] || resolveTopics.resolve;
+    document.querySelectorAll("[data-resolve-topic]").forEach(button => {
+      const selected = button.dataset.resolveTopic === topicKey;
+      button.classList.toggle("selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+    resolveContent.innerHTML = `
+      <div class="resolve-card-head">
+        <span>${topic.eyebrow}</span>
+        <h3>${topic.title}</h3>
+        <p>${topic.description}</p>
+      </div>
+      <div class="resolve-chip-row">
+        ${topic.tags.map(tag => `<span>${tag}</span>`).join("")}
+      </div>
+      <div class="resolve-highlights">
+        ${topic.highlights.map(item => `<div><i data-lucide="check-circle-2"></i><p>${item}</p></div>`).join("")}
+      </div>
+      <div class="resolve-interpretation">
+        <span>Lectura en reportes</span>
+        <p>${topic.interpretation}</p>
+      </div>
+      <div class="resolve-scope-note">
+        <i data-lucide="lock-keyhole"></i>
+        <p>La fuente pública resume el alcance metodológico sin exponer parámetros internos, reglas de decisión detalladas ni lógica propietaria completa.</p>
+      </div>
+    `;
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  async function loadAndroidDocument() {
+    if (!androidContent) return;
+    try {
+      androidMarkdown = await fetchMarkdown("module-readmes/android-usuario.md");
+      androidContent.innerHTML = markdownToHtml(androidMarkdown);
+    } catch {
+      androidContent.innerHTML = "<p>No fue posible cargar la documentación Android.</p>";
+    }
+  }
+
+  async function ensureAndroidMarkdown() {
+    if (androidMarkdown) return androidMarkdown;
+    androidMarkdown = await fetchMarkdown("module-readmes/android-usuario.md");
+    return androidMarkdown;
+  }
+
+  function extractAndroidToolSection(markdown, heading) {
+    const lines = markdown.split(/\r?\n/);
+    const start = lines.findIndex(line => line.trim() === `### ${heading}`);
+    if (start === -1) return "";
+    let end = lines.length;
+    for (let index = start + 1; index < lines.length; index += 1) {
+      if (/^#{2,3}\s+/.test(lines[index])) {
+        end = index;
+        break;
+      }
+    }
+    return lines.slice(start, end).join("\n").trim();
+  }
+
+  async function openAndroidTool(toolKey) {
+    if (!androidDetailPanel || !androidDetailTitle || !androidDetailCategory || !androidDetailContent) return;
+    const meta = androidToolMeta[toolKey];
+    if (!meta) return;
+    document.querySelectorAll("[data-android-tool]").forEach(item => item.classList.toggle("selected", item.dataset.androidTool === toolKey));
+    androidDetailPanel.style.setProperty("--detail-accent", meta.accent);
+    androidDetailTitle.textContent = meta.title;
+    androidDetailCategory.textContent = `${meta.category} · CyC Mobile Suite`;
+    androidDetailContent.innerHTML = "<p>Cargando documentación...</p>";
+    androidDetailPanel.hidden = false;
+    try {
+      const markdown = await ensureAndroidMarkdown();
+      const section = extractAndroidToolSection(markdown, toolKey);
+      androidDetailContent.innerHTML = section ? markdownToHtml(section) : "<p>No fue posible encontrar la descripción de esta herramienta en el README de usuario.</p>";
+    } catch {
+      androidDetailContent.innerHTML = "<p>No fue posible cargar la documentación de esta herramienta.</p>";
+    }
+    androidDetailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  function renderRelatedDocs(card) {
+    if (!relatedDocs) return;
+    if (card.dataset.readme !== "postproceso") {
+      relatedDocs.hidden = true;
+      relatedDocs.innerHTML = "";
+      return;
+    }
+
+    relatedDocs.innerHTML = `
+      <div>
+        <span>DOCUMENTO FUNDAMENTAL</span>
+        <h4>CyC Resolve</h4>
+        <p>Documento externo de respaldo metodológico para interpretar reportes y componentes CyC Resolve sin exponer lógica propietaria.</p>
+      </div>
+      <a href="#cyc-resolve" class="resolve-link"><i data-lucide="file-text"></i><span>Leer documento técnico</span></a>
+    `;
+    relatedDocs.hidden = false;
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  function renderPipeline(card) {
+    const pipeline = modulePipelines[card.dataset.readme];
+    if (!pipeline) {
+      detailPipeline.hidden = true;
+      return;
+    }
+    pipelineTitle.textContent = `Pipeline de ${card.querySelector("h3").textContent}`;
+    pipelineSummary.textContent = pipeline.summary;
+    pipelineFlow.innerHTML = pipeline.steps.map((step, index) => `
+      <div class="module-flow-step">
+        <span>${String(index + 1).padStart(2, "0")}</span>
+        <i data-lucide="${step[0]}"></i>
+        <div><b>${step[1]}</b><small>${step[2]}</small></div>
+      </div>
+      ${index < pipeline.steps.length - 1 ? '<div class="module-flow-line" aria-hidden="true"></div>' : ""}
+    `).join("");
+    detailPipeline.hidden = false;
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  async function openModule(card) {
+    document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
+    card.classList.add("selected");
+    detailPanel.style.setProperty("--detail-accent", card.dataset.accent);
+    detailTitle.textContent = card.querySelector("h3").textContent;
+    detailCategory.textContent = `${card.querySelector(".module-meta span").textContent} · ${card.querySelector(".module-meta small").textContent}`;
+    detailPanel.hidden = false;
+    detailContent.innerHTML = "<p>Cargando documentación...</p>";
+    detailPipeline.hidden = true;
+    try {
+      const markdown = await fetchMarkdown(`module-readmes/${card.dataset.readme}.md`);
+      detailContent.innerHTML = markdownToHtml(markdown);
+    } catch {
+      detailContent.innerHTML = "<p>No fue posible cargar la documentación de este módulo.</p>";
+    }
+    renderPipeline(card);
+    renderRelatedDocs(card);
+    detailPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  document.querySelectorAll(".module-card").forEach(card => card.addEventListener("click", () => openModule(card)));
+  document.querySelector(".detail-close")?.addEventListener("click", () => {
+    detailPanel.hidden = true;
+    if (relatedDocs) relatedDocs.hidden = true;
+    document.querySelectorAll(".module-card").forEach(item => item.classList.remove("selected"));
+  });
+  document.querySelectorAll("[data-android-tool]").forEach(tool => tool.addEventListener("click", () => openAndroidTool(tool.dataset.androidTool)));
+  document.querySelectorAll("[data-resolve-topic]").forEach(button => button.addEventListener("click", () => renderResolveTopic(button.dataset.resolveTopic)));
+  document.querySelector(".android-detail-close")?.addEventListener("click", () => {
+    if (androidDetailPanel) androidDetailPanel.hidden = true;
+    document.querySelectorAll("[data-android-tool]").forEach(item => item.classList.remove("selected"));
+  });
+
+  document.querySelectorAll("[data-open-module]").forEach(link => {
+    link.addEventListener("click", event => {
+      const card = document.querySelector(`.module-card[data-readme="${link.dataset.openModule}"]`);
+      if (!card) return;
+      event.preventDefault();
+      openModule(card);
+    });
+  });
+
+  renderResolveTopic("resolve");
+  loadAndroidDocument();
+
+  document.querySelectorAll("[data-current-year]").forEach(node => node.textContent = new Date().getFullYear());
+
+  function formatBytes(bytes) {
+    if (!Number.isFinite(bytes) || bytes <= 0) return "";
+    const units = ["B", "KB", "MB", "GB"];
+    let size = bytes, unit = 0;
+    while (size >= 1024 && unit < units.length - 1) {
+      size /= 1024;
+      unit += 1;
+    }
+    return `${size.toFixed(unit === 0 ? 0 : 1)} ${units[unit]}`;
+  }
+
+  function summarizeReleaseBody(body = "") {
+    return String(body || "")
+      .split(/\r?\n/)
+      .map(line => line.replace(/^[-*#\s]+/, "").trim())
+      .filter(line => line && !/^versi[oó]n instalable/i.test(line) && !/^tag de publicaci[oó]n/i.test(line))
+      .slice(0, 3);
+  }
+
+  function escapeHtml(value = "") {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  let localNewsRendered = false;
+
+  function plainTextFromMarkdown(value = "") {
+    return String(value || "")
+      .replace(/```[\s\S]*?```/g, " ")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/[*_~>#]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function normalizeNewsVersion(version = "") {
+    const text = String(version || "").trim();
+    if (!text) return "";
+    if (text.startsWith("v") || !/^\d/.test(text)) return text;
+    return `v${text}`;
+  }
+
+  function renderNewsCarousel(item, screenshots, index) {
+    if (!screenshots.length) return "";
+    const carouselId = `news-carousel-${index}`;
+    const first = screenshots[0];
+    return `
+      <div class="news-carousel" data-news-carousel="${carouselId}">
+        <div class="news-carousel-head">
+          <h4>Screenshots</h4>
+          <div>
+            <button type="button" data-carousel-prev="${carouselId}" aria-label="Screenshot anterior"><i data-lucide="chevron-left"></i></button>
+            <button type="button" data-carousel-next="${carouselId}" aria-label="Screenshot siguiente"><i data-lucide="chevron-right"></i></button>
+          </div>
+        </div>
+        <button type="button" class="news-carousel-main" data-carousel-open="${carouselId}" aria-label="Abrir screenshot en tamaño completo">
+          <img src="${escapeHtml(first.src)}" alt="${escapeHtml(first.alt || item.title || "Screenshot de novedades")}" loading="lazy" data-carousel-main="${carouselId}">
+          <span><i data-lucide="maximize-2"></i> Abrir imagen completa</span>
+        </button>
+        <div class="news-carousel-track" id="${carouselId}" tabindex="0" aria-label="Miniaturas de ${escapeHtml(item.title || item.version || "novedades")}">
+          ${screenshots.map((shot, shotIndex) => {
+            const src = escapeHtml(shot.src);
+            const alt = escapeHtml(shot.alt || `${item.title || "Novedades"} screenshot ${shotIndex + 1}`);
+            return `<button type="button" class="news-thumb ${shotIndex === 0 ? "active" : ""}" data-carousel-thumb="${carouselId}" data-src="${src}" data-alt="${alt}" aria-label="Mostrar screenshot ${shotIndex + 1}"><img src="${src}" alt="${alt}" loading="lazy"></button>`;
+          }).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function ensureNewsLightbox() {
+    let lightbox = document.querySelector("[data-news-lightbox]");
+    if (lightbox) return lightbox;
+    lightbox = document.createElement("div");
+    lightbox.className = "news-lightbox";
+    lightbox.dataset.newsLightbox = "true";
+    lightbox.hidden = true;
+    lightbox.innerHTML = `
+      <button type="button" class="news-lightbox-close" aria-label="Cerrar imagen"><i data-lucide="x"></i></button>
+      <img alt="">
+    `;
+    document.body.appendChild(lightbox);
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox || event.target.closest(".news-lightbox-close")) {
+        lightbox.hidden = true;
+      }
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") lightbox.hidden = true;
+    });
+    return lightbox;
+  }
+
+  function initNewsInteractions(container) {
+    const setCarouselImage = (carouselId, src, alt) => {
+      const main = container.querySelector(`[data-carousel-main="${carouselId}"]`);
+      if (!main) return;
+      main.src = src;
+      main.alt = alt || "Screenshot de novedades";
+      container.querySelectorAll(`[data-carousel-thumb="${carouselId}"]`).forEach(thumb => {
+        thumb.classList.toggle("active", thumb.dataset.src === src);
+      });
+    };
+    const moveCarousel = (carouselId, direction) => {
+      const thumbs = Array.from(container.querySelectorAll(`[data-carousel-thumb="${carouselId}"]`));
+      if (!thumbs.length) return;
+      const activeIndex = Math.max(0, thumbs.findIndex(thumb => thumb.classList.contains("active")));
+      const next = thumbs[(activeIndex + direction + thumbs.length) % thumbs.length];
+      setCarouselImage(carouselId, next.dataset.src, next.dataset.alt);
+      const track = document.getElementById(carouselId);
+      if (track) {
+        const targetLeft = next.offsetLeft - (track.clientWidth - next.clientWidth) / 2;
+        track.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
+      }
+    };
+    container.querySelectorAll("[data-carousel-thumb]").forEach(button => {
+      button.addEventListener("click", () => setCarouselImage(button.dataset.carouselThumb, button.dataset.src, button.dataset.alt));
+    });
+    container.querySelectorAll("[data-carousel-prev],[data-carousel-next]").forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.carouselPrev || button.dataset.carouselNext;
+        const direction = button.dataset.carouselNext ? 1 : -1;
+        moveCarousel(id, direction);
+      });
+    });
+    container.querySelectorAll("[data-carousel-open]").forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.carouselOpen;
+        const main = container.querySelector(`[data-carousel-main="${id}"]`);
+        if (!main) return;
+        const lightbox = ensureNewsLightbox();
+        const image = lightbox.querySelector("img");
+        image.src = main.src;
+        image.alt = main.alt;
+        lightbox.hidden = false;
+        if (window.lucide) window.lucide.createIcons();
+      });
+    });
+    container.querySelectorAll("[data-news-carousel]").forEach(carousel => {
+      const id = carousel.dataset.newsCarousel;
+      window.setInterval(() => {
+        if (!document.hidden) moveCarousel(id, 1);
+      }, 5500);
+    });
+  }
+
+  function renderNews(items = []) {
+    const container = document.querySelector("[data-news-list]");
+    if (!container || !items.length) return;
+    container.innerHTML = items.slice(0, 1).map((item, index) => {
+      const version = normalizeNewsVersion(item.version);
+      const pageTitle = item.title || "ULTIMAS NOVEDADES";
+      const type = escapeHtml(item.type || "Release Desktop");
+      const date = item.date ? `<time>${escapeHtml(item.date)}</time>` : "";
+      const screenshots = Array.isArray(item.screenshots) ? item.screenshots.filter(shot => shot && shot.src).slice(0, 8) : [];
+      const latest = index === 0 ? `<span class="release-latest">Latest</span>` : "";
+      const url = escapeHtml(item.url || "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases");
+      document.querySelectorAll("[data-news-title]").forEach(node => {
+        node.textContent = pageTitle;
+      });
+      return `
+        <article class="news-board-card ${index === 0 ? "latest-release-card" : ""}">
+          <header class="release-notes-head">
+            <div>
+                <h3>${version || escapeHtml(pageTitle)} <small>(${type})</small> ${latest}</h3>
+            </div>
+            ${date}
+          </header>
+          <div class="news-markdown-board">
+            ${markdownToHtml(item.description || item.summary || "Sin descripcion de novedades.")}
+          </div>
+          ${renderNewsCarousel(item, screenshots, index)}
+          ${item.url ? `<a class="release-note-link" href="${url}"><i data-lucide="github"></i><span>Ver publicación en GitHub</span></a>` : ""}
+        </article>
+      `;
+    }).join("");
+    initNewsInteractions(container);
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  let versionsTagSet = false;
+
+  fetch(`versions.json?v=${cacheKey}`, { cache: "no-store" })
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(versions => {
+      const desktopVersion = versions.desktop_release_version || versions.suite;
+      const desktopTag = versions.desktop_release_tag || `v${desktopVersion}`;
+      document.querySelectorAll("[data-suite-version]").forEach(node => node.textContent = `Suite v${versions.suite}`);
+      document.querySelectorAll("[data-installable-version]").forEach(node => node.textContent = `v${desktopVersion}`);
+      document.querySelectorAll("[data-release-version]").forEach(node => node.textContent = desktopTag);
+      document.querySelectorAll("[data-release-name]").forEach(node => node.textContent = `CyC Desktop Suite v${desktopVersion}`);
+      versionsTagSet = true;
+      const latestLabel = versions.latest_module === "desktop-release" ? `Última publicación Desktop v${desktopVersion}` : `Última evolución: ${versions.latest_module}`;
+      document.querySelectorAll("[data-latest-module]").forEach(node => node.textContent = latestLabel);
+      if (Array.isArray(versions.news) && versions.news.length) {
+        renderNews(versions.news);
+        localNewsRendered = true;
+      }
+      document.querySelectorAll(".module-card").forEach(card => {
+        const version = versions.modules?.[card.dataset.readme];
+        if (version) card.querySelector(".module-meta small").textContent = `v${version}`;
+      });
+    })
+    .catch(() => {});
+
+  fetch("https://api.github.com/repos/cc-topografia-mid/CyC_Suite_Releases/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(release => {
+      const version = release.tag_name || "Versión estable";
+      const date = release.published_at ? new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(new Date(release.published_at)) : "Publicación oficial";
+      const installer = release.assets?.find(asset => /\.exe$/i.test(asset.name)) || release.assets?.[0];
+      const releaseUrl = release.html_url || "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/latest";
+      const downloadUrl = installer?.browser_download_url || releaseUrl;
+      if (!versionsTagSet) {
+        document.querySelectorAll("[data-release-version]").forEach(node => node.textContent = version);
+      }
+      document.querySelectorAll("[data-release-date]").forEach(node => node.textContent = `Publicada el ${date}`);
+      if (!versionsTagSet) {
+        document.querySelectorAll("[data-release-name]").forEach(node => node.textContent = release.name || "CyC Topografía Suite para Windows");
+      }
+      document.querySelectorAll("[data-release-link]").forEach(node => node.href = downloadUrl);
+      document.querySelectorAll("[data-release-page]").forEach(node => node.href = releaseUrl);
+      document.querySelectorAll("[data-release-asset]").forEach(node => node.textContent = installer?.name || "Ver archivos de la publicación");
+      document.querySelectorAll("[data-release-size]").forEach(node => {
+        const size = formatBytes(installer?.size);
+        node.textContent = size ? `Tamaño: ${size}` : "";
+        node.hidden = !size;
+      });
+      document.querySelectorAll("[data-release-sha]").forEach(node => {
+        const sha = installer?.digest?.replace(/^sha256:/i, "").toUpperCase();
+        node.textContent = sha ? `SHA-256: ${sha.slice(0, 12)}...${sha.slice(-8)}` : "";
+        node.title = sha ? `SHA-256: ${sha}` : "";
+        node.hidden = !sha;
+      });
+    }).catch(() => {});
+
+  fetch("https://api.github.com/repos/cc-topografia-mid/CyC_Suite_Releases/releases?per_page=3", { headers: { Accept: "application/vnd.github+json" } })
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(releases => {
+      if (localNewsRendered) return;
+      const items = releases.filter(release => !release.draft).map(release => {
+        const date = release.published_at ? new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(new Date(release.published_at)) : "";
+        return {
+          type: release.prerelease ? "Pre-release Desktop" : "Release Desktop",
+          version: release.tag_name,
+          title: release.name || `CyC Desktop Suite ${release.tag_name || ""}`.trim(),
+          date,
+          highlights: summarizeReleaseBody(release.body),
+          url: release.html_url
+        };
+      });
+      renderNews(items);
+    })
+    .catch(() => {});
+
+  const canvas = document.getElementById("fieldCanvas");
+  if (!canvas) return;
+  const context = canvas.getContext("2d");
+  let points = [], frame;
+  function resize() {
+    const scale = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = canvas.clientWidth * scale;
+    canvas.height = canvas.clientHeight * scale;
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+    points = Array.from({ length: Math.max(24, Math.floor(canvas.clientWidth / 40)) }, (_, index) => ({
+      x: Math.random() * canvas.clientWidth, y: Math.random() * canvas.clientHeight,
+      phase: Math.random() * Math.PI * 2, speed: .0015 + Math.random() * .0015, r: index % 7 === 0 ? 2.2 : 1.1
+    }));
+  }
+  function draw(time) {
+    context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+    context.strokeStyle = "rgba(248,199,25,.13)"; context.fillStyle = "rgba(248,199,25,.55)";
+    points.forEach((point, index) => {
+      const y = point.y + Math.sin(time * point.speed + point.phase) * 13;
+      context.beginPath(); context.arc(point.x, y, point.r, 0, Math.PI * 2); context.fill();
+      for (let next = index + 1; next < points.length; next++) {
+        const other = points[next], otherY = other.y + Math.sin(time * other.speed + other.phase) * 13;
+        const distance = Math.hypot(point.x - other.x, y - otherY);
+        if (distance < 145) {
+          context.globalAlpha = 1 - distance / 145; context.beginPath(); context.moveTo(point.x, y);
+          context.lineTo(other.x, otherY); context.stroke(); context.globalAlpha = 1;
+        }
+      }
+    });
+    frame = requestAnimationFrame(draw);
+  }
+  resize(); frame = requestAnimationFrame(draw); window.addEventListener("resize", resize);
+  document.addEventListener("visibilitychange", () => document.hidden ? cancelAnimationFrame(frame) : frame = requestAnimationFrame(draw));
+});

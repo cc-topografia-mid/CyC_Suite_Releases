@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#127A3A">
+  <title>CyC Desktop Suite | PayPal</title>
+  <style>
+    :root {
+      --cyc-green: #127A3A;
+      --cyc-dark: #123427;
+      --cyc-yellow: #FFC21A;
+      --cyc-bg: #F3F6F4;
+      --cyc-muted: #456156;
+      --cyc-error: #B91C1C;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--cyc-dark);
+      background: var(--cyc-bg);
+    }
+    main {
+      width: min(580px, calc(100vw - 32px));
+      padding: 32px;
+      border: 2px solid var(--cyc-green);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 14px 36px rgba(18, 52, 39, 0.14);
+    }
+    .badge {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--cyc-yellow);
+      color: var(--cyc-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0 0 12px; font-size: 24px; line-height: 1.2; }
+    p { margin: 0 0 12px; font-size: 16px; line-height: 1.45; }
+    .detail { margin-top: 18px; color: var(--cyc-muted); font-size: 13px; }
+    .error h1 { color: var(--cyc-error); }
+  </style>
+</head>
+<body>
+  <main id="card">
+    <span class="badge" id="badge">PayPal</span>
+    <h1 id="title">Aportacion procesada</h1>
+    <p id="message">Gracias por apoyar el desarrollo continuo de la Suite. Tu aportacion pausara la publicidad al sincronizar CyC Desktop Suite.</p>
+    <p>Puedes cerrar esta ventana y volver a CyC Desktop Suite.</p>
+    <p class="detail" id="detail"></p>
+  </main>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const status = (params.get("status") || "success").toLowerCase();
+    const env = params.get("env") || "PayPal";
+    const detail = params.get("detail") || "";
+    const card = document.getElementById("card");
+    const badge = document.getElementById("badge");
+    const title = document.getElementById("title");
+    const message = document.getElementById("message");
+    const detailNode = document.getElementById("detail");
+
+    badge.textContent = env;
+    if (status === "cancel") {
+      title.textContent = "Aportacion cancelada";
+      message.textContent = "No se realizo ningun cargo.";
+    } else if (status === "error") {
+      card.classList.add("error");
+      title.textContent = "No se pudo confirmar la aportacion";
+      message.textContent = "La operacion fue recibida, pero no se pudo completar automaticamente.";
+    }
+    detailNode.textContent = detail;
+    if (!detail) detailNode.remove();
+  </script>
+</body>
+</html>

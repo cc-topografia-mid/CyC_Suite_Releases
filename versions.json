@@ -1,0 +1,128 @@
+{
+  "suite": "260717.1120",
+  "desktop_release_version": "260717.1120",
+  "desktop_release_tag": "v260717.1120",
+  "latest_module": "desktop-release",
+  "news": [
+    {
+      "type": "Desktop Release",
+      "version": "v260717.1120",
+      "title": "ULTIMAS NOVEDADES",
+      "date": "18 de julio de 2026",
+      "summary": "Nos complace presentar la nueva versión de CyC Topografía Suite (v260717.1233). Este release introduce herramientas de vanguardia para la generación de entregables cartográficos y estandariza la producción de reportes té",
+      "description": "## Novedades de la Suite - Release v260717.1233\n\nNos complace presentar la nueva versión de **CyC Topografía Suite (v260717.1233)**. Este release introduce herramientas de vanguardia para la generación de entregables cartográficos y estandariza la producción de reportes técnicos de alta precisión, consolidando la suite como un ecosistema integrado, robusto y eficiente para el profesional de la geomática y la ingeniería civil.\n\n### Nuevas Herramientas\n\n*   **Módulo Croquis de Ubicación:** Se incorpora una solución integral para la creación de planos de localización en tres escalas simultáneas (**Local, Ciudad y Estado**). Permite la captura interactiva mediante mapa o la introducción precisa de coordenadas (**UTM, Geográficas Decimales y GMS**).\n*   **Estilo Plano Vectorial CAD:** Nueva capacidad dentro del módulo de Croquis que permite renderizar vialidades, costas y límites administrativos directamente desde datos vectoriales de OpenStreetMap (OSM), con control de grosores (1 a 8 px) y categorización de vías.\n*   **Motor Común de Reportes (`reportes_preview`):** Un nuevo componente transversal que unifica la experiencia de edición, visualización previa y exportación de documentos PDF. Ofrece un visor interactivo con zoom, paginación y la nueva paleta **Blanco y Negro Técnico** para una presentación sobria y profesional.\n\n### Mejoras en Módulos Existentes\n\n*   **Integración en Linderos:** El módulo adopta el **Nuevo Motor de Reportes**, permitiendo generar el *Reporte Técnico de Linderos y Colindancias* con un encabezado corporativo estandarizado, número único de documento y asignación dinámica de paletas de color.\n*   **Modernización en Postproceso:** Se añade la opción de emitir reportes GNSS bajo el estándar del nuevo motor, incorporando un encabezado moderno con logotipo, título geodésico de alta precisión y metadatos del proyecto actualizados.\n*   **Personalización Avanzada de Simbología:** En Croquis, se amplía el rango de escalado de símbolos (del 50% al 500%) y se añaden controles independientes para configurar el grosor y color de pines, cruces y círculos concéntricos.\n\n### Optimización y Estabilidad\n\n*   **Rendimiento Cartográfico Asíncrono:** La generación de vistas previas y la descarga de teselas se ejecutan ahora en paralelo, evitando bloqueos en la interfaz de usuario.\n*   **Caché Inteligente y Modo Degradado:** Implementación de una caché cartográfica y vectorial con persistencia de 7 días, garantizando la operatividad del software incluso ante fallas de conexión con los servidores de mapas.\n*   **Mitigación de Falsos Positivos:** Optimización en el empaquetado del controlador de Postproceso (`MemoriaFix`) para evitar bloqueos preventivos por parte de software antivirus comunes.",
+      "url": "",
+      "highlights": [
+        "Novedades de la Suite - Release v260717.1233",
+        "Nos complace presentar la nueva versión de CyC Topografía Suite (v260717.1233). Este release introduce herramientas de vanguardia para la generación de entregables cartográficos y estandariza la producción de reportes técnicos de alta precisión, consolidando la suite como un ecosistema integrado, robusto y eficiente para el profesional de la geomática y la ingeniería civil.",
+        "Nuevas Herramientas",
+        "Módulo Croquis de Ubicación: Se incorpora una solución integral para la creación de planos de localización en tres escalas simultáneas (Local, Ciudad y Estado). Permite la captura interactiva mediante mapa o la introducción precisa de coordenadas (UTM, Geográficas Decimales y GMS).",
+        "Estilo Plano Vectorial CAD: Nueva capacidad dentro del módulo de Croquis que permite renderizar vialidades, costas y límites administrativos directamente desde datos vectoriales de OpenStreetMap (OSM), con control de grosores (1 a 8 px) y categorización de vías."
+      ],
+      "release_notes": {
+        "sections": [
+          {
+            "key": "features",
+            "icon": "🚀",
+            "title": "Nuevas Funcionalidades",
+            "items": [
+              {
+                "module": "croquis",
+                "text": "Módulo Croquis de Ubicación: Se incorpora una solución integral para la creación de planos de localización en tres escalas simultáneas (Local, Ciudad y Estado). Permite la captura interactiva mediante mapa o la introducción precisa de coordenadas (UTM, Geográficas Decimales y GMS)."
+              },
+              {
+                "module": "croquis",
+                "text": "Estilo Plano Vectorial CAD: Nueva capacidad dentro del módulo de Croquis que permite renderizar vialidades, costas y límites administrativos directamente desde datos vectoriales de OpenStreetMap (OSM), con control de grosores (1 a 8 px) y categorización de vías."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Motor Común de Reportes (reportespreview): Un nuevo componente transversal que unifica la experiencia de edición, visualización previa y exportación de documentos PDF. Ofrece un visor interactivo con zoom, paginación y la nueva paleta Blanco y Negro Técnico para una presentación sobria y profesional."
+              }
+            ]
+          },
+          {
+            "key": "changes",
+            "icon": "✨",
+            "title": "Mejoras y Cambios",
+            "items": [
+              {
+                "module": "linderos",
+                "text": "Integración en Linderos: El módulo adopta el Nuevo Motor de Reportes, permitiendo generar el Reporte Técnico de Linderos y Colindancias con un encabezado corporativo estandarizado, número único de documento y asignación dinámica de paletas de color."
+              },
+              {
+                "module": "postproceso",
+                "text": "Modernización en Postproceso: Se añade la opción de emitir reportes GNSS bajo el estándar del nuevo motor, incorporando un encabezado moderno con logotipo, título geodésico de alta precisión y metadatos del proyecto actualizados."
+              },
+              {
+                "module": "croquis",
+                "text": "Personalización Avanzada de Simbología: En Croquis, se amplía el rango de escalado de símbolos (del 50% al 500%) y se añaden controles independientes para configurar el grosor y color de pines, cruces y círculos concéntricos."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Rendimiento Cartográfico Asíncrono: La generación de vistas previas y la descarga de teselas se ejecutan ahora en paralelo, evitando bloqueos en la interfaz de usuario."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Caché Inteligente y Modo Degradado: Implementación de una caché cartográfica y vectorial con persistencia de 7 días, garantizando la operatividad del software incluso ante fallas de conexión con los servidores de mapas."
+              },
+              {
+                "module": "postproceso",
+                "text": "Mitigación de Falsos Positivos: Optimización en el empaquetado del controlador de Postproceso (MemoriaFix) para evitar bloqueos preventivos por parte de software antivirus comunes."
+              }
+            ]
+          },
+          {
+            "key": "fixes",
+            "icon": "🐛",
+            "title": "Correcciones de Errores",
+            "items": []
+          },
+          {
+            "key": "older",
+            "icon": "🛠️",
+            "title": "Cambios en versiones anteriores",
+            "items": []
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "src": "assets/news/v260717.1233/01-01.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 1"
+        },
+        {
+          "src": "assets/news/v260717.1233/02-02.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 2"
+        },
+        {
+          "src": "assets/news/v260717.1233/03-03.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 3"
+        },
+        {
+          "src": "assets/news/v260717.1233/04-04.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 4"
+        },
+        {
+          "src": "assets/news/v260717.1233/05-05.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 5"
+        }
+      ]
+    },
+    {
+      "type": "Release Desktop",
+      "version": "v260710.1127",
+      "title": "CyC Desktop Suite v260710.1127",
+      "date": "10 de julio de 2026",
+      "summary": "Última publicación instalable para Windows con descarga oficial desde GitHub Releases.",
+      "description": "Última publicación instalable para Windows con descarga oficial desde GitHub Releases.",
+      "url": "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/tag/v260710.1127",
+      "highlights": [
+        "Instalador oficial para Windows publicado en GitHub Releases.",
+        "Página de distribución actualizada con versión instalable y enlace de descarga.",
+        "Notas de publicación vinculadas al release correspondiente."
+      ],
+      "screenshots": []
+    }
+  ],
+  "modules": {}
+}
