@@ -1,0 +1,38 @@
+.release-meta {
+  display: grid;
+  gap: 7px;
+  margin: 15px 0 2px;
+  padding: 13px 0;
+  border-top: 1px solid #ffffff1a;
+  border-bottom: 1px solid #ffffff1a;
+}
+
+.release-meta span {
+  color: #c5d5ca;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.release-meta span:first-child {
+  color: #fff;
+  font-weight: 800;
+}
+
+.release-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #d9e5dc;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 3px 0 14px;
+}
+
+.release-secondary:hover {
+  color: #fff;
+}
+
+.release-secondary svg {
+  color: var(--yellow);
+}

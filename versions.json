@@ -1,0 +1,226 @@
+{
+  "suite": "260725.2126",
+  "desktop_release_version": "260725.2126",
+  "desktop_release_tag": "v260725.2126",
+  "latest_module": "desktop-release",
+  "news": [
+    {
+      "type": "Desktop Release",
+      "version": "v260725.2126",
+      "title": "ULTIMAS NOVEDADES",
+      "date": "26 de julio de 2026",
+      "summary": "Novedades de CyC Topografía Suite",
+      "description": "# Novedades de CyC Topografía Suite\n\nEsta actualización reúne las mejoras más importantes de **CyC Topografía Suite**. El resultado es una experiencia más completa para la elaboración de entregables cartográficos, la generación de reportes técnicos, el soporte al usuario y la continuidad del trabajo en campo y gabinete.\n\n## Principales novedades\n\n### Nuevo módulo de Croquis de Ubicación\n\n- Creación de planos de localización en tres escalas simultáneas: **Local, Ciudad y Estado**.\n- Captura de ubicaciones mediante mapa interactivo o coordenadas **UTM, geográficas decimales y grados, minutos y segundos (GMS)**.\n- Nuevo estilo **Plano Vectorial CAD** para representar vialidades, costas y límites administrativos a partir de datos de OpenStreetMap.\n- Controles avanzados para personalizar grosores, colores y escalas de pines, cruces y círculos concéntricos.\n\n### Reportes técnicos unificados\n\n- Incorporación del motor común **`reportes_preview`** para editar, previsualizar y exportar documentos PDF.\n- Visor interactivo con zoom, paginación y paletas de presentación, incluida **Blanco y Negro Técnico**.\n- Integración del nuevo formato de reportes en **Linderos** y **Postproceso GNSS**.\n- Encabezados corporativos, numeración de documentos y metadatos de proyecto estandarizados para obtener entregables más consistentes y profesionales.\n\n### Hub Principal renovado\n\n- Rediseño visual del Hub.\n- Mejora del contraste, la legibilidad y la navegación en el menú lateral.\n- Corrección de proporciones y deformaciones en los controles de expansión y contracción del menú.\n\n### Funciones técnicas sin bloqueos\n\n- Eliminación de restricciones en las funciones avanzadas del módulo **Presupuestos**.\n- Adopción de un modelo de monetización no bloqueante que mantiene disponibles los procesos técnicos de la Suite.\n- Mejoras en el reconocimiento automatico de aportaciones voluntarias mediante **PayPal Checkout**, sin interferir con las herramientas de cálculo.\n- Ajuste de los avisos informativos en **Conversiones, Croquis, DataLink, Linderos, Postproceso y RINEX** para reducir interrupciones y evitar que acciones fallidas o canceladas sean contabilizadas.\n\n### Diagnóstico y soporte técnico\n\n- Nuevo panel de **Logs** con un resumen del estado del sistema.\n- Generación de paquetes de diagnóstico para facilitar el análisis de incidencias.\n- Preparación automatizada de un borrador de correo con la información necesaria para solicitar soporte.\n\n### Recuperación ante fallos de actualización\n\n- Nuevo sistema de rescate disponible durante el arranque de la aplicación.\n- Posibilidad de cerrar procesos bloqueados y restaurar la copia de seguridad del último microparche.\n- Mayor protección frente a fallos críticos que impidan el inicio normal de la Suite.\n\n### Rendimiento y estabilidad\n\n- Procesamiento cartográfico asíncrono para evitar bloqueos de la interfaz durante la generación de vistas previas y la descarga de teselas.\n- Caché cartográfica y vectorial con persistencia de siete días.\n- Modo degradado para mantener parte de la operación cuando existe conectividad limitada o fallan los servicios de mapas.\n- Optimización del empaquetado de **Postproceso** para reducir falsos positivos de software antivirus.\n\n## Resumen de impacto\n\n| Área | Mejora principal | Beneficio |\n| :--- | :--- | :--- |\n| **Cartografía** | Croquis multiescala y estilo vectorial CAD | Planos de ubicación más completos y personalizables. |\n| **Reportes** | Motor común para Linderos y Postproceso | Entregables PDF uniformes y profesionales. |\n| **Accesibilidad** | Eliminación de bloqueos funcionales | Herramientas técnicas disponibles sin restricciones de uso. |\n| **Interfaz** | Renovación visual del Hub | Navegación más clara y mejor legibilidad. |\n| **Soporte** | Panel de Logs y paquete de diagnóstico | Reporte y atención de incidencias más ágiles. |\n| **Seguridad** | Restauración del último microparche | Recuperación más sencilla ante fallos de arranque. |\n| **Rendimiento** | Procesamiento asíncrono, caché y modo degradado | Mayor fluidez y continuidad con conectividad limitada. |\n\n## En pocas palabras\n\nLas actualizaciones fortalecen tres pilares de **CyC Topografía Suite**: la creación de entregables cartográficos profesionales, el acceso continuo a las herramientas técnicas y una operación más estable. Los usuarios reciben nuevas capacidades en Croquis y reportes, una interfaz modernizada, mejores recursos de diagnóstico y mecanismos de recuperación que reducen el impacto de fallos o conexiones inestables.",
+      "url": "",
+      "highlights": [
+        "Novedades de CyC Topografía Suite",
+        "Esta actualización reúne las mejoras más importantes de CyC Topografía Suite. El resultado es una experiencia más completa para la elaboración de entregables cartográficos, la generación de reportes técnicos, el soporte al usuario y la continuidad del trabajo en campo y gabinete.",
+        "Principales novedades",
+        "Nuevo módulo de Croquis de Ubicación",
+        "Creación de planos de localización en tres escalas simultáneas: Local, Ciudad y Estado."
+      ],
+      "release_notes": {
+        "sections": [
+          {
+            "key": "features",
+            "icon": "🚀",
+            "title": "Nuevas Funcionalidades",
+            "items": [
+              {
+                "module": "Suite_Core",
+                "text": "Creación de planos de localización en tres escalas simultáneas: Local, Ciudad y Estado."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Captura de ubicaciones mediante mapa interactivo o coordenadas UTM, geográficas decimales y grados, minutos y segundos (GMS)."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Nuevo estilo Plano Vectorial CAD para representar vialidades, costas y límites administrativos a partir de datos de OpenStreetMap."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Controles avanzados para personalizar grosores, colores y escalas de pines, cruces y círculos concéntricos."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Incorporación del motor común reportespreview para editar, previsualizar y exportar documentos PDF."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Visor interactivo con zoom, paginación y paletas de presentación, incluida Blanco y Negro Técnico."
+              },
+              {
+                "module": "linderos",
+                "text": "Integración del nuevo formato de reportes en Linderos y Postproceso GNSS."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Encabezados corporativos, numeración de documentos y metadatos de proyecto estandarizados para obtener entregables más consistentes y profesionales."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Rediseño visual del Hub."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Mejora del contraste, la legibilidad y la navegación en el menú lateral."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Corrección de proporciones y deformaciones en los controles de expansión y contracción del menú."
+              },
+              {
+                "module": "presupuestos",
+                "text": "Eliminación de restricciones en las funciones avanzadas del módulo Presupuestos."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Adopción de un modelo de monetización no bloqueante que mantiene disponibles los procesos técnicos de la Suite."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Mejoras en el reconocimiento automatico de aportaciones voluntarias mediante PayPal Checkout, sin interferir con las herramientas de cálculo."
+              },
+              {
+                "module": "croquis",
+                "text": "Ajuste de los avisos informativos en Conversiones, Croquis, DataLink, Linderos, Postproceso y RINEX para reducir interrupciones y evitar que acciones fallidas o canceladas sean contabilizadas."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Nuevo panel de Logs con un resumen del estado del sistema."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Generación de paquetes de diagnóstico para facilitar el análisis de incidencias."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Preparación automatizada de un borrador de correo con la información necesaria para solicitar soporte."
+              }
+            ]
+          },
+          {
+            "key": "changes",
+            "icon": "✨",
+            "title": "Mejoras y Cambios",
+            "items": [
+              {
+                "module": "Suite_Core",
+                "text": "Nuevo sistema de rescate disponible durante el arranque de la aplicación."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Posibilidad de cerrar procesos bloqueados y restaurar la copia de seguridad del último microparche."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Mayor protección frente a fallos críticos que impidan el inicio normal de la Suite."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Procesamiento cartográfico asíncrono para evitar bloqueos de la interfaz durante la generación de vistas previas y la descarga de teselas."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Caché cartográfica y vectorial con persistencia de siete días."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Modo degradado para mantener parte de la operación cuando existe conectividad limitada o fallan los servicios de mapas."
+              },
+              {
+                "module": "postproceso",
+                "text": "Optimización del empaquetado de Postproceso para reducir falsos positivos de software antivirus."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Mejora principal. Impacto: Beneficio"
+              },
+              {
+                "module": "croquis",
+                "text": "Croquis multiescala y estilo vectorial CAD. Impacto: Planos de ubicación más completos y personalizables."
+              },
+              {
+                "module": "linderos",
+                "text": "Motor común para Linderos y Postproceso. Impacto: Entregables PDF uniformes y profesionales."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Eliminación de bloqueos funcionales. Impacto: Herramientas técnicas disponibles sin restricciones de uso."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Renovación visual del Hub. Impacto: Navegación más clara y mejor legibilidad."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Panel de Logs y paquete de diagnóstico. Impacto: Reporte y atención de incidencias más ágiles."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Restauración del último microparche. Impacto: Recuperación más sencilla ante fallos de arranque."
+              },
+              {
+                "module": "Suite_Core",
+                "text": "Procesamiento asíncrono, caché y modo degradado. Impacto: Mayor fluidez y continuidad con conectividad limitada."
+              }
+            ]
+          },
+          {
+            "key": "fixes",
+            "icon": "🐛",
+            "title": "Correcciones de Errores",
+            "items": []
+          },
+          {
+            "key": "older",
+            "icon": "🛠️",
+            "title": "Cambios en versiones anteriores",
+            "items": []
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "src": "assets/news/v260725.2126/01-01.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 1"
+        },
+        {
+          "src": "assets/news/v260725.2126/02-02.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 2"
+        },
+        {
+          "src": "assets/news/v260725.2126/03-03.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 3"
+        },
+        {
+          "src": "assets/news/v260725.2126/04-04.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 4"
+        },
+        {
+          "src": "assets/news/v260725.2126/05-05.jpg",
+          "alt": "ULTIMAS NOVEDADES - screenshot 5"
+        }
+      ]
+    },
+    {
+      "type": "Release Desktop",
+      "version": "v260710.1127",
+      "title": "CyC Desktop Suite v260710.1127",
+      "date": "10 de julio de 2026",
+      "summary": "Última publicación instalable para Windows con descarga oficial desde GitHub Releases.",
+      "description": "Última publicación instalable para Windows con descarga oficial desde GitHub Releases.",
+      "url": "https://github.com/cc-topografia-mid/CyC_Suite_Releases/releases/tag/v260710.1127",
+      "highlights": [
+        "Instalador oficial para Windows publicado en GitHub Releases.",
+        "Página de distribución actualizada con versión instalable y enlace de descarga.",
+        "Notas de publicación vinculadas al release correspondiente."
+      ],
+      "screenshots": []
+    }
+  ],
+  "modules": {
+    "croquis": "260722.0912"
+  }
+}

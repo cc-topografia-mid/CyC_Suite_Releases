@@ -1,0 +1,314 @@
+# CyC Resolve
+
+**Documento técnico de respaldo externo**
+
+**Versión documentada del módulo:** 260613.1100
+**Fecha de emisión técnica:** 2026-06-19
+**Módulo principal:** Motor de postproceso GNSS / CyC Topografía Suite
+
+---
+
+## 1. Propósito del documento
+
+Este documento describe, a nivel técnico general, la función de CyC Resolve dentro de la CyC Topografía Suite.
+
+Su objetivo es servir como respaldo metodológico para interpretar reportes donde se mencionen componentes como CyC Resolve, CyC Resolve Integrity, CyC Resolve IonoCore o GeoCore.
+
+El presente documento no contiene parámetros internos completos, reglas de decisión detalladas, ponderaciones, firmas funcionales, configuraciones reproducibles ni procedimientos que permitan replicar el método propietario de procesamiento.
+
+Este documento no sustituye normas oficiales, certificación metrológica externa, dictamen pericial ni validación institucional independiente.
+
+---
+
+## 2. Descripción general
+
+CyC Resolve es una capa técnica de orquestación, validación y trazabilidad aplicada al postproceso GNSS.
+
+Su función principal es coordinar archivos de observación, motores de cálculo, estrategias de procesamiento, evaluación de resultados, evidencia técnica y generación de reportes.
+
+En la versión documentada, CyC Resolve utiliza un motor externo de cálculo GNSS como componente operativo, pero el método no se limita a dicho motor. CyC Resolve agrega control de insumos, administración de estrategias, validación posterior, documentación técnica y conservación de evidencia.
+
+---
+
+## 3. Componentes principales
+
+### 3.1 CyC Resolve
+
+Es el marco general de procesamiento GNSS de la suite. Coordina la preparación de datos, ejecución del cálculo, lectura de resultados, evaluación de calidad y generación de reportes.
+
+Cuando un reporte indique:
+
+> Procesado con CyC Resolve
+
+debe entenderse que el resultado fue obtenido bajo el flujo técnico de control, procesamiento, validación y trazabilidad de la CyC Topografía Suite.
+
+---
+
+### 3.2 CyC Resolve Integrity
+
+Es la capa de evaluación técnica del resultado.
+
+Su función es revisar si una solución obtenida por el motor de cálculo cuenta con evidencia suficiente para ser reportada como resultado defendible.
+
+CyC Resolve Integrity no modifica artificialmente las coordenadas ni fuerza soluciones. Su papel es evaluar consistencia temporal, estabilidad, calidad observacional, comportamiento geométrico y otros indicadores técnicos.
+
+Cuando un reporte indique:
+
+> Resultado validado por CyC Resolve Integrity
+
+significa que el resultado fue revisado mediante criterios internos de control de calidad.
+
+---
+
+### 3.3 CyC Resolve IonoCore
+
+Es el componente encargado de gestionar información ionosférica dentro del flujo de procesamiento.
+
+Puede reconocer, evaluar o incorporar productos ionosféricos disponibles cuando el contexto técnico lo justifica. Su intervención queda documentada en el reporte cuando aplica.
+
+Cuando un reporte indique:
+
+> Modelo ionosférico asistido por CyC Resolve IonoCore
+
+significa que se consideró información ionosférica dentro del proceso técnico.
+
+---
+
+### 3.4 CyC Resolve GeoCore
+
+GeoCore es la capa de tratamiento vertical posterior al cálculo GNSS.
+
+Permite documentar la conversión entre altura elipsoidal y altura ortométrica cuando existe un modelo geoidal aplicable.
+
+Cuando el modelo no puede aplicarse técnicamente, GeoCore puede registrarlo como modelo reconocido no aplicado, conservando la altura elipsoidal original.
+
+---
+
+## 4. Alcance técnico
+
+CyC Resolve está orientado principalmente al postproceso GNSS de observaciones estáticas o semiestáticas, con énfasis en trazabilidad documental y control técnico de resultados.
+
+El sistema puede trabajar con archivos GNSS estándar, productos auxiliares y modelos externos, siempre que sean compatibles con el flujo de procesamiento y puedan ser documentados.
+
+Este documento no describe configuraciones internas, umbrales, secuencias de estrategia ni procedimientos exactos de ejecución.
+
+---
+
+## 5. Flujo técnico general
+
+De forma general, el flujo de CyC Resolve comprende:
+
+1. Recepción de archivos GNSS y auxiliares.
+2. Revisión de coherencia entre observaciones, base, rover y archivos de apoyo.
+3. Preparación del entorno de cálculo.
+4. Ejecución de una o más estrategias técnicas.
+5. Lectura de resultados generados por el motor de cálculo.
+6. Evaluación de calidad mediante CyC Resolve Integrity.
+7. Selección documentada del resultado final.
+8. Registro de evidencia técnica.
+9. Generación de reporte.
+
+Este flujo puede variar según la información disponible, el tipo de sesión, la calidad de observación y los archivos auxiliares cargados.
+
+---
+
+## 6. Estrategias de procesamiento
+
+CyC Resolve utiliza estrategias técnicas controladas para evaluar diferentes condiciones de procesamiento.
+
+Una estrategia puede considerar variaciones en modelos, constelaciones, tratamiento de observables, sentido de solución, información auxiliar o criterios de filtrado.
+
+El catálogo completo de estrategias, sus reglas de activación, jerarquías, parámetros y criterios de selección forman parte de la lógica interna propietaria de la suite y no se documentan públicamente.
+
+---
+
+## 7. Validación de resultados
+
+CyC Resolve Integrity evalúa si un resultado es técnicamente defendible.
+
+La validación puede considerar, entre otros aspectos:
+
+- Estabilidad de la solución.
+- Continuidad temporal.
+- Consistencia geométrica.
+- Calidad de observaciones.
+- Indicadores internos del motor de cálculo.
+- Comportamiento de satélites.
+- Coherencia frente a estrategias alternativas.
+- Evidencia disponible en archivos técnicos.
+
+El sistema distingue entre un resultado calculado y un resultado aceptado para reporte.
+
+Una solución generada por el motor de cálculo puede conservarse como evidencia sin ser necesariamente aceptada como resultado final.
+
+---
+
+## 8. Tipos de decisión
+
+CyC Resolve puede clasificar resultados de forma interna según su nivel de confianza técnica.
+
+De manera general, una solución puede ser:
+
+- Aceptada como resultado defendible.
+- Aceptada con reservas documentadas.
+- Conservada únicamente como evidencia.
+- Sustituida por un resultado recomendado cuando no existe solución plenamente aceptable.
+
+La clasificación exacta depende de reglas internas no publicadas.
+
+---
+
+## 9. Consenso técnico
+
+Cuando no existe una solución suficientemente robusta, CyC Resolve puede generar una recomendación técnica basada en candidatos disponibles.
+
+Esta recomendación no debe interpretarse como una solución fija certificable, sino como una coordenada propuesta con trazabilidad de incertidumbre y limitaciones.
+
+El reporte debe indicar claramente cuando el resultado corresponde a una recomendación técnica y no a una solución de máxima confianza.
+
+---
+
+## 10. Trazabilidad documental
+
+CyC Resolve conserva evidencia técnica de cada procesamiento.
+
+La trazabilidad puede incluir:
+
+- Archivos usados.
+- Resultado seleccionado.
+- Información general de estrategia.
+- Evidencia de calidad.
+- Registro de eventos técnicos.
+- Modelos auxiliares reconocidos o aplicados.
+- Estado de validación.
+- Datos necesarios para interpretar el reporte.
+
+El nivel de trazabilidad depende de los archivos disponibles y del estado del proyecto procesado.
+
+---
+
+## 11. Modelado ionosférico
+
+CyC Resolve IonoCore permite administrar información ionosférica disponible durante el procesamiento GNSS.
+
+Su función es apoyar el análisis técnico cuando las condiciones de la sesión puedan beneficiarse de dicha información.
+
+La aplicación efectiva de información ionosférica depende de compatibilidad, disponibilidad, cobertura, calidad de datos y conveniencia técnica.
+
+El reporte debe indicar si el modelo fue aplicado, considerado o únicamente registrado como evidencia.
+
+---
+
+## 12. Modelo geoidal y altura ortométrica
+
+GeoCore permite documentar el uso de modelos geoidales para convertir alturas elipsoidales GNSS en alturas ortométricas.
+
+La relación general es:
+
+```text
+H = h - N
+```
+
+donde:
+
+- h es la altura elipsoidal.
+- N es la ondulación geoidal.
+- H es la altura ortométrica.
+
+Cuando el modelo geoidal puede aplicarse, el reporte debe documentar la conversión. Cuando no puede aplicarse, el reporte debe conservar la altura elipsoidal e indicar el motivo técnico.
+
+---
+
+## 13. Evidencia y resultado final
+
+CyC Resolve distingue entre evidencia técnica y resultado final.
+
+La evidencia técnica incluye datos, cálculos, intentos, candidatos y diagnósticos generados durante el proceso.
+
+El resultado final es la solución seleccionada para reporte después de aplicar los controles internos de validación.
+
+Esta separación permite conservar información útil para auditoría sin presentar toda solución intermedia como resultado aceptado.
+
+---
+
+## 14. Independencia del motor de cálculo
+
+CyC Resolve no debe entenderse como sinónimo de un único motor matemático.
+
+El motor de cálculo realiza la solución numérica de observaciones GNSS. CyC Resolve coordina el flujo, controla insumos, administra estrategias, evalúa resultados, conserva evidencia y genera reportes.
+
+La arquitectura permite que el sistema pueda evolucionar e integrar otros motores o métodos de comparación, siempre que los resultados puedan ser evaluados y documentados.
+
+---
+
+## 15. Reportes generados
+
+Los reportes de CyC Topografía Suite pueden presentar distintos niveles de detalle, dependiendo del formato seleccionado.
+
+En general, deben conservar:
+
+- Resultado principal.
+- Estado de validación.
+- Información general de procesamiento.
+- Evidencia técnica relevante.
+- Modelos auxiliares aplicados o reconocidos.
+- Limitaciones del resultado.
+- Trazabilidad suficiente para interpretación profesional.
+
+Los reportes no necesariamente exponen toda la configuración interna del procesamiento.
+
+---
+
+## 16. Límites del sistema
+
+CyC Resolve adopta criterios conservadores de reporte.
+
+El sistema:
+
+- No declara automáticamente un resultado como aceptado solo porque el motor entregue una solución favorable.
+- No oculta la existencia de evidencia técnica relevante.
+- No presenta recomendaciones como soluciones certificables.
+- No afirma uso efectivo de modelos auxiliares si estos no fueron aplicados.
+- No reemplaza validaciones externas cuando estas sean necesarias.
+- No constituye por sí mismo una certificación oficial o institucional.
+
+---
+
+## 17. Interpretación de términos
+
+**Procesado con CyC Resolve**
+Indica que el resultado fue obtenido bajo el flujo técnico de procesamiento, control y reporte de la suite.
+
+**Resultado validado por CyC Resolve Integrity**
+Indica que el resultado fue revisado mediante criterios internos de consistencia técnica.
+
+**Modelo ionosférico asistido por CyC Resolve IonoCore**
+Indica que se consideró información ionosférica dentro del flujo de procesamiento.
+
+**Conversión vertical por GeoCore**
+Indica que la altura ortométrica fue calculada o evaluada mediante un modelo geoidal reconocido.
+
+**Resultado recomendado**
+Indica una solución propuesta con base en evidencia disponible, sin equivaler necesariamente a una solución fija de máxima confianza.
+
+---
+
+## 18. Reproducibilidad
+
+La reproducibilidad técnica depende de la conservación de archivos GNSS, productos auxiliares, reportes, registros internos y evidencia generada durante el procesamiento.
+
+Cuando alguno de estos elementos no está disponible, la trazabilidad puede ser parcial.
+
+CyC Resolve busca documentar el proceso de forma suficiente para interpretación profesional, sin exponer necesariamente la lógica interna completa ni los parámetros propietarios del sistema.
+
+---
+
+## 19. Resumen técnico
+
+CyC Resolve es un sistema de orquestación, validación y trazabilidad para postproceso GNSS.
+
+Su función no es forzar soluciones, sino administrar datos, ejecutar procesamiento controlado, evaluar resultados y documentar evidencia técnica.
+
+CyC Resolve Integrity actúa como filtro de calidad. IonoCore apoya el tratamiento ionosférico cuando aplica. GeoCore documenta la conversión vertical mediante modelo geoidal cuando es técnicamente posible.
+
+El sistema está diseñado para que los reportes emitidos por la CyC Topografía Suite puedan explicar de forma profesional qué resultado se obtuvo, bajo qué condiciones generales, con qué evidencia y con qué limitaciones, sin divulgar la lógica propietaria completa del método.
